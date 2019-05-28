@@ -1,8 +1,10 @@
 
 public class King extends Piece {
-
-	public King() {
+	private Coordinate location;
+	
+	public King(Coordinate location) {
 		// TODO Auto-generated constructor stub
+		this.location = location;
 	}
 
 	@Override

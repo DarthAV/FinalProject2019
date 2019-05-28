@@ -1,8 +1,10 @@
 
 public class Queen extends Piece {
-
-	public Queen() {
+	private Coordinate location;
+	
+	public Queen(Coordinate location) {
 		// TODO Auto-generated constructor stub
+		this.location = location;
 	}
 
 	@Override
