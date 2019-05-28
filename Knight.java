@@ -1,8 +1,10 @@
 
 public class Knight extends Piece {
-
-	public Knight() {
+	private Coordinate location;
+	
+	public Knight(Coordinate location) {
 		// TODO Auto-generated constructor stub
+		this.location = location;
 	}
 
 	@Override

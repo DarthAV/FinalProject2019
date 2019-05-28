@@ -9,7 +9,20 @@ public class Coordinate {
 		this.letter = letter;
 		this.number = number;
 	}
+	
 	public char getLetter() { return letter; }
 	public char getNumber() { return number; }
+	
+	public void setCoordinate(char letter, char number) {
+		this.letter = letter;
+		this.number = number;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "" + letter + number;
+	}
+	
 	
 }

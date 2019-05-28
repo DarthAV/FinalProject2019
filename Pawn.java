@@ -1,8 +1,12 @@
 
 public class Pawn extends Piece {
-
-	public Pawn() {
+	private Coordinate location;
+	private boolean isWhite;
+	
+	public Pawn(Coordinate location, boolean isWhite) {
 		// TODO Auto-generated constructor stub
+		this.location = location;
+		this.isWhite = isWhite;
 	}
 
 	@Override
@@ -10,5 +14,10 @@ public class Pawn extends Piece {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 }
