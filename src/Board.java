@@ -13,7 +13,7 @@ public class Board {
 			for (int j = 0; j < board[i].length; j++) {
 				Piece spot = board[i][j];
 				if(spot == null) {
-					visibleBoard[i][j] = '.';
+					//visibleBoard[i][j] = '.';
 				} else {
 					visibleBoard[i][j] = spot.getChar();
 				}
@@ -22,6 +22,9 @@ public class Board {
 		}
 		//we will work on formatting this later on
 		System.out.println(Arrays.deepToString(visibleBoard));
+		System.out.println();
+		System.out.println();
+		
 		
 		
 		
