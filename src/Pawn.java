@@ -2,11 +2,17 @@
 public class Pawn extends Piece {
 	private Coordinate location;
 	private boolean isWhite;
+	private char displayChar;
 	
 	public Pawn(Coordinate location, boolean isWhite) {
 		// TODO Auto-generated constructor stub
 		this.location = location;
 		this.isWhite = isWhite;
+		if(isWhite) {
+			this.displayChar = 'P';
+		} else {
+			this.displayChar = 'p';
+		}
 	}
 
 	@Override
@@ -15,9 +21,7 @@ public class Pawn extends Piece {
 		
 	}
 	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public char getChar() {
+		return displayChar;
 	}
 }
