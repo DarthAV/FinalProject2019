@@ -1,5 +1,4 @@
-//use this image as a reference
-//		http://bit.ly/ChessLetters
+//should we use points instead of this, this is making it complicated
 public class Coordinate {
 	
 	private char letter;
