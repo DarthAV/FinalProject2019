@@ -14,6 +14,9 @@ public class Pawn extends Piece {
 			this.displayChar = 'p';
 		}
 	}
+	
+	public char getChar() { return displayChar; }
+	public boolean getColor() { return isWhite; } //returns true if it is white
 
 	@Override
 	public void move() {
@@ -21,7 +24,4 @@ public class Pawn extends Piece {
 		
 	}
 	
-	public char getChar() {
-		return displayChar;
-	}
 }

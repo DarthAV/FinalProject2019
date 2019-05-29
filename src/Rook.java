@@ -15,14 +15,14 @@ public class Rook extends Piece {
 		}
 	}
 
+	public char getChar() { return displayChar; }
+	public boolean getColor() { return isWhite; } //returns true if it is white
+
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public char getChar() {
-		return displayChar;
-	}
 
 }
