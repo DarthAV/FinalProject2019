@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class Pawn extends Piece {
 	private Coordinate location;
@@ -20,6 +21,11 @@ public class Pawn extends Piece {
 	@Override
 	public void move() {
 		
+	}
+
+	@Override
+	public ArrayList<Coordinate> getValidMoves() {
+		return null;
 	}
 	
 }

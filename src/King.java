@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class King extends Piece {
 	private Coordinate location;
@@ -22,6 +23,12 @@ public class King extends Piece {
 	@Override
 	public void move() {
 		
+	}
+
+	@Override
+	public ArrayList<Coordinate> getValidMoves() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

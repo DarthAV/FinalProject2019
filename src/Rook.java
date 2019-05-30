@@ -25,10 +25,12 @@ public class Rook extends Piece {
 	public void move() {
 		
 	}
-	
-	public ArrayList<Coordinate> findValidSpots() {
-		
-		return new ArrayList<Coordinate>();
+
+	@Override
+	public ArrayList<Coordinate> getValidMoves() {
+		return null;
 	}
+	
+	
 	
 }
