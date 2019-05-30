@@ -6,6 +6,10 @@ public class Board {
 	public static void main(String[] args) {
 		Piece[][] board = new Piece[8][8];
 		setBoard(board);
+		drawBoard(board);
+	}
+	
+	public static void drawBoard(Piece[][] board) {
 		char[][] visibleBoard = new char[8][8];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
@@ -41,7 +45,6 @@ public class Board {
 			System.out.print("|");
 			System.out.println();
 		}
-		
 	}
 	
 	//sets the board to the starting position
