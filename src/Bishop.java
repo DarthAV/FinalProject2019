@@ -5,7 +5,6 @@ public class Bishop extends Piece {
 	private char displayChar;
 	
 	public Bishop(Coordinate location, boolean isWhite) {
-		// TODO Auto-generated constructor stub
 		this.location = location;
 		this.isWhite = isWhite;
 		if(isWhite) {
@@ -20,7 +19,6 @@ public class Bishop extends Piece {
 	
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,8 +1,6 @@
-import java.util.*;
 
-//our chessboard has the numbers going down from the top left
+//our chess board has the numbers going down from the top left
 //the letters go right from the top left
-
 public class Board {
 
 	public static void main(String[] args) {
@@ -20,13 +18,29 @@ public class Board {
 				
 			}
 		}
-		//we will work on formatting this later on
-		System.out.println(Arrays.deepToString(visibleBoard));
+		
+		//we still need to work on this
+		System.out.print("     ");
+		for(int i = 1; i < 9; i++) {
+			System.out.print((char)(i+64) + "   ");
+		}
 		System.out.println();
+		System.out.print("    ");
+		for(int i = 1; i < 32; i++) {
+			System.out.print("_");
+		}
 		System.out.println();
-		
-		
-		
+		for (int i = 0; i < visibleBoard.length; i++) {
+			System.out.print(i+1 + "  ");
+			for (int j = 0; j < visibleBoard[i].length; j++) {
+				System.out.print("|_");
+				System.out.print(visibleBoard[i][j]);
+				System.out.print("_");
+				
+			}
+			System.out.print("|");
+			System.out.println();
+		}
 		
 	}
 	
