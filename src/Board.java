@@ -1,9 +1,5 @@
-import java.awt.GridLayout;
-import java.util.*;
 
-import javax.swing.*;
-
-//our chessboard has the numbers going down from the top left
+//our chess board has the numbers going down from the top left
 //the letters go right from the top left
 public class Board {
 
@@ -22,14 +18,27 @@ public class Board {
 				
 			}
 		}
+		
 		//we still need to work on this
+		System.out.print("     ");
+		for(int i = 1; i < 9; i++) {
+			System.out.print((char)(i+64) + "   ");
+		}
+		System.out.println();
+		System.out.print("    ");
+		for(int i = 1; i < 32; i++) {
+			System.out.print("_");
+		}
+		System.out.println();
 		for (int i = 0; i < visibleBoard.length; i++) {
-			for (int j = 1; j < visibleBoard[i].length-1; j++) {
+			System.out.print(i+1 + "  ");
+			for (int j = 0; j < visibleBoard[i].length; j++) {
+				System.out.print("|_");
 				System.out.print(visibleBoard[i][j]);
-				System.out.print("_|_");
+				System.out.print("_");
+				
 			}
-			System.out.print("");
-			System.out.print(visibleBoard[i][visibleBoard[i].length - 1]);
+			System.out.print("|");
 			System.out.println();
 		}
 		

@@ -7,7 +7,6 @@ public class Rook extends Piece {
 	private boolean hasMoved; //for castling logic
 	
 	public Rook(Coordinate location, boolean isWhite) {
-		// TODO Auto-generated constructor stub
 		this.location = location;
 		this.isWhite = isWhite;
 		this.hasMoved = false;
@@ -20,10 +19,10 @@ public class Rook extends Piece {
 
 	public char getChar() { return displayChar; }
 	public boolean getColor() { return isWhite; } //returns true if it is white
+	public Coordinate getLocation() { return location; }
 
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
 		
 	}
 	
