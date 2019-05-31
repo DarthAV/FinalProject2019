@@ -1,6 +1,7 @@
 
 //our chess board has the numbers going down from the top left
 //the letters go right from the top left
+
 public class Board {
 
 	public static void main(String[] args) {

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Pawn extends Piece {
 	private Coordinate location;
 	private boolean isWhite;
+	private boolean hasMoved;
 	private char displayChar;
 	
 	public Pawn(Coordinate location, boolean isWhite) {
@@ -20,12 +21,17 @@ public class Pawn extends Piece {
 
 	@Override
 	public void move() {
-		
+		this.hasMoved = true;
 	}
 
 	@Override
 	public ArrayList<Coordinate> getValidMoves() {
-		return null;
+		ArrayList<Coordinate> spots = new ArrayList<Coordinate>();
+		if(this.hasMoved) {
+			
+		}
+		return spots;
+
 	}
 	
 }
