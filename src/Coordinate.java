@@ -19,8 +19,13 @@ public class Coordinate {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "" + letter + number;
+	}
+
+	public static Coordinate asCoordinate(String input) {
+		if(input.length != 2) {
+			return null;
+		} 
 	}
 	
 	
