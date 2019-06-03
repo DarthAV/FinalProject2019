@@ -1,9 +1,10 @@
 # APCS Final Project - Chess
 
 # todo
-
+## ved
 - [ ] moving rules
 - [ ] moving pieces - both board.java and input.
+## ansh
 - [ ] formatting board correctly
 - [ ] graphics
 
