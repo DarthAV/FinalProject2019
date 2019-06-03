@@ -3,5 +3,5 @@
 
 aims to refactor code so that Board.java handles moving, and pieces handle *validating*.
 
-- [ ] test
+- [x] test
 - [ ] add functionality found in master/Pawn.java
