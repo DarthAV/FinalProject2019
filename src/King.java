@@ -1,12 +1,13 @@
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class King extends Piece {
-	private Coordinate location;
+	private Point location;
 	private boolean isWhite;
 	private char displayChar;
 	private boolean canCastle;
 	
-	public King(Coordinate location, boolean isWhite) {
+	public King(Point location, boolean isWhite) {
 		this.location = location;
 		this.isWhite = isWhite;
 		this.canCastle = true;
@@ -26,7 +27,7 @@ public class King extends Piece {
 	}
 
 	@Override
-	public ArrayList<Coordinate> getValidMoves() {
+	public ArrayList<Point> getValidMoves() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,11 +1,12 @@
+import java.awt.Point;
 import java.util.ArrayList;
 
 public class Knight extends Piece {
-	private Coordinate location;
+	private Point location;
 	private boolean isWhite;
 	private char displayChar;
 	
-	public Knight(Coordinate location, boolean isWhite) {
+	public Knight(Point location, boolean isWhite) {
 		this.location = location;
 		this.isWhite = isWhite;
 		if(isWhite) {
@@ -24,7 +25,7 @@ public class Knight extends Piece {
 	}
 
 	@Override
-	public ArrayList<Coordinate> getValidMoves() {
+	public ArrayList<Point> getValidMoves() {
 		// TODO Auto-generated method stub
 		return null;
 	}
