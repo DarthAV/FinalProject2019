@@ -1,32 +1,17 @@
-import java.util.ArrayList;
 
-public class Bishop extends Piece {
-	private Coordinate location;
-	private boolean isWhite;
-	private char displayChar;
-	
-	public Bishop(Coordinate location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		if(isWhite) {
-			this.displayChar = 'B';
-		} else {
-			this.displayChar = 'b';
-		}
-	}
+public class Bishop implements Piece {
 
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
-	
-	@Override
-	public void move() {
-		
-	}
+    private boolean isWhite;
 
-	@Override
-	public ArrayList<Coordinate> getValidMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Bishop(boolean isWhite) { this.isWhite = isWhite; }
 
+    public boolean validateMove() {
+        return false;
+    }
+
+    public int[][] getValidMoves(Board board){
+        return new int[][];
+    }
+
+    public char getChar() { return isWhite ? 'B' : 'b'; }
 }

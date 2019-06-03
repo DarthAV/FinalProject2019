@@ -1,36 +1,17 @@
-import java.util.ArrayList;
 
-public class Rook extends Piece {
-	private Coordinate location;
-	private boolean isWhite;
-	private char displayChar;
-	private boolean hasMoved; //for castling logic
-	
-	public Rook(Coordinate location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		this.hasMoved = false;
-		if(isWhite) {
-			this.displayChar = 'R';
-		} else {
-			this.displayChar = 'r';
-		}
-	}
+public class King implements Piece {
 
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
-	public Coordinate getLocation() { return location; }
+    private boolean isWhite;
 
-	@Override
-	public void move() {
-		
-	}
+    public Rook(boolean isWhite) { this.isWhite = isWhite; }
 
-	@Override
-	public ArrayList<Coordinate> getValidMoves() {
-		return null;
-	}
-	
-	
-	
+    public boolean validateMove() {
+        return false;
+    }
+
+    public int[][] getValidMoves(Board board){
+        return new int[][];
+    }
+
+    public char getChar() { return isWhite ? 'R' : 'r'; }
 }

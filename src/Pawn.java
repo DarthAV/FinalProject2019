@@ -1,37 +1,17 @@
-import java.util.ArrayList;
 
-public class Pawn extends Piece {
-	private Coordinate location;
-	private boolean isWhite;
-	private boolean hasMoved;
-	private char displayChar;
-	
-	public Pawn(Coordinate location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		if(isWhite) {
-			this.displayChar = 'P';
-		} else {
-			this.displayChar = 'p';
-		}
-	}
-	
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
+public class Pawn implements Piece {
 
-	@Override
-	public void move() {
-		this.hasMoved = true;
-	}
+    private boolean isWhite;
 
-	@Override
-	public ArrayList<Coordinate> getValidMoves() {
-		ArrayList<Coordinate> spots = new ArrayList<Coordinate>();
-		if(this.hasMoved) {
-			
-		}
-		return spots;
+    public Pawn(boolean isWhite) { this.isWhite = isWhite; }
 
-	}
-	
+    public boolean validateMove() {
+        return false;
+    }
+
+    public int[][] getValidMoves(Board board){
+        return new int[][];
+    }
+
+    public char getChar() { return isWhite ? 'P' : 'p'; }
 }
