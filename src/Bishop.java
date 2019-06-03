@@ -10,8 +10,10 @@ public class Bishop implements Piece {
     }
 
     public int[][] getValidMoves(Board board){
-        return new int[][];
+        return new int[8][8];
     }
 
     public char getChar() { return isWhite ? 'B' : 'b'; }
+    
+    public boolean isWhite() { return isWhite; }
 }

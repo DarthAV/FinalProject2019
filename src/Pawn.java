@@ -10,8 +10,11 @@ public class Pawn implements Piece {
     }
 
     public int[][] getValidMoves(Board board){
-        return new int[][];
+        return new int[8][8];
+
     }
 
     public char getChar() { return isWhite ? 'P' : 'p'; }
+    
+    public boolean isWhite() { return isWhite; }
 }

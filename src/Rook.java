@@ -1,5 +1,5 @@
 
-public class King implements Piece {
+public class Rook implements Piece {
 
     private boolean isWhite;
 
@@ -10,8 +10,11 @@ public class King implements Piece {
     }
 
     public int[][] getValidMoves(Board board){
-        return new int[][];
+        return new int[8][8];
+
     }
 
     public char getChar() { return isWhite ? 'R' : 'r'; }
+    
+    public boolean isWhite() { return isWhite; }
 }

@@ -4,13 +4,7 @@
 public class Board {
     public Piece[][] board = new Piece[8][8];
 
-    public static void main(String[] args) {
-        setBoard();
-        drawBoard();
-    }
-
-
-    public static void drawBoard(Piece[][] board) {
+    public void drawBoard() {
         char[][] visibleBoard = new char[8][8];
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -49,7 +43,7 @@ public class Board {
     }
 
 
-    private static void setBoard(Piece[][] board) {
+    public void setBoard() {
 
         //how do we want to do the grid system? Right now it is feeling weird
 
@@ -105,7 +99,7 @@ public class Board {
 
 
 
-    public static Piece[][] getBoard() {
+    public Piece[][] getBoard() {
 
         return board;
 
