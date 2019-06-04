@@ -22,11 +22,11 @@ public class Coordinate {
 		return "" + letter + number;
 	}
 
-	public static Coordinate asCoordinate(String input) {
-		if(input.length != 2) {
-			return null;
-		} 
-	}
+//	public static Coordinate asCoordinate(String input) {
+//		if(input.length != 2) {
+//			return null;
+//		} 
+//	}
 	
 	
 }

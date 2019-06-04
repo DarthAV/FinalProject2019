@@ -1,18 +1,9 @@
-import java.awt.Point;
-import java.util.ArrayList;
 
-public abstract class Piece {
-	private char name;
-	private Point spot;
-	
-	public abstract void move();
-	public abstract char getChar();
-	public abstract boolean getColor();
-	public abstract ArrayList<Point> getValidMoves();
-	public void move(Point goTo) {
-		
-	}
-	
-	
-	
+// we can always change to abstract class later
+
+public interface Piece {
+    public boolean validateMove(); // should this return a Point instead?
+    public int[][] getValidMoves(Board board); // should this return an ArrayList<Point> instead?
+    public char getChar();
+    public boolean isWhite();
 }

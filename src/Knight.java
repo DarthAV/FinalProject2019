@@ -1,33 +1,21 @@
-import java.awt.Point;
-import java.util.ArrayList;
 
-public class Knight extends Piece {
-	private Point location;
-	private boolean isWhite;
-	private char displayChar;
-	
-	public Knight(Point location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		if(isWhite) {
-			this.displayChar = 'K';
-		} else {
-			this.displayChar = 'k';
-		}
-	}
 
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
+public class Knight implements Piece {
 
-	@Override
-	public void move() {
-		
-	}
+    private boolean isWhite;
 
-	@Override
-	public ArrayList<Point> getValidMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public Knight(boolean isWhite) { this.isWhite = isWhite; }
 
+    public boolean validateMove() {
+        return false;
+    }
+
+    public int[][] getValidMoves(Board board){
+        return new int[8][8];
+    }
+
+    public char getChar() { return isWhite ? 'N' : 'n'; }
+    // checked online, N is the right repr
+    
+    public boolean isWhite() { return isWhite; }
 }

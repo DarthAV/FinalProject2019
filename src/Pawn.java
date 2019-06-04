@@ -1,25 +1,26 @@
-import java.awt.Point;
-import java.util.ArrayList;
 
-public class Pawn extends Piece {
-	private Point location;
-	private boolean isWhite;
-	private boolean hasMoved;
-	private char displayChar;
-	
-	public Pawn(Point location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		if(isWhite) {
-			this.displayChar = 'P';
-		} else {
-			this.displayChar = 'p';
-		}
-	}
-	
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
 
+public class Pawn implements Piece {
+
+    private boolean isWhite;
+
+    public Pawn(boolean isWhite) { this.isWhite = isWhite; }
+
+    public boolean validateMove() {
+        return false;
+    }
+
+    public int[][] getValidMoves(Board board){
+        return new int[8][8];
+
+    }
+
+    public char getChar() { return isWhite ? 'P' : 'p'; }
+    
+    public boolean isWhite() { return isWhite; }
+}
+/*
+>master<
 	@Override
 	public void move(Point goTo) {
 		this.hasMoved = true;
@@ -45,11 +46,5 @@ public class Pawn extends Piece {
 		return spots;
 
 	}
+*/
 
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-}
