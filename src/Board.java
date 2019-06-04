@@ -10,16 +10,13 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 Piece spot = board[i][j];
-                if(spot == null) {
-                    //visibleBoard[i][j] = '.';
-                } else {
+                if(spot != null) {
                     visibleBoard[i][j] = spot.getChar();
                 }
 
             }
         }
 
-        //we still need to work on this
         System.out.print("     ");
         for(int i = 1; i < 9; i++) {
             System.out.print((char)(i+64) + "   ");
@@ -45,10 +42,6 @@ public class Board {
 
 
     public void setBoard() {
-
-        //how do we want to do the grid system? Right now it is feeling weird
-
-        //maybe we should use java.awt.Point
 
         board[0][0] = new Rook(false);
 
