@@ -1,33 +1,18 @@
-import java.awt.Point;
-import java.util.ArrayList;
+public class Bishop implements Piece {
 
-public class Bishop extends Piece {
-	private Point location;
-	private boolean isWhite;
-	private char displayChar;
-	
-	public Bishop(Point location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		if(isWhite) {
-			this.displayChar = 'B';
-		} else {
-			this.displayChar = 'b';
-		}
-	}
+    private boolean isWhite;
 
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
-	
-	@Override
-	public void move() {
-		
-	}
+    public Bishop(boolean isWhite) { this.isWhite = isWhite; }
 
-	@Override
-	public ArrayList<Point> getValidMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public boolean validateMove() {
+        return false;
+    }
 
+    public int[][] getValidMoves(Board board){
+        return new int[8][8];
+    }
+
+    public char getChar() { return isWhite ? 'B' : 'b'; }
+    
+    public boolean isWhite() { return isWhite; }
 }

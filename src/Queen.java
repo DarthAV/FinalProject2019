@@ -1,33 +1,20 @@
-import java.awt.Point;
-import java.util.ArrayList;
 
-public class Queen extends Piece {
-	private Point location;
-	private boolean isWhite;
-	private char displayChar;
-	
-	public Queen(Point location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		if(isWhite) {
-			this.displayChar = 'Q';
-		} else {
-			this.displayChar = 'q';
-		}
-	}
+public class Queen implements Piece {
 
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
+    private boolean isWhite;
 
-	@Override
-	public void move() {
-		
-	}
+    public Queen(boolean isWhite) { this.isWhite = isWhite; }
 
-	@Override
-	public ArrayList<Point> getValidMoves() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public boolean validateMove() {
+        return false;
+    }
 
+    public int[][] getValidMoves(Board board){
+        return new int[8][8];
+
+    }
+
+    public char getChar() { return isWhite ? 'Q' : 'q'; }
+    
+    public boolean isWhite() { return isWhite; }
 }

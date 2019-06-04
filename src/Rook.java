@@ -1,37 +1,20 @@
-import java.awt.Point;
-import java.util.ArrayList;
 
-public class Rook extends Piece {
-	private Point location;
-	private boolean isWhite;
-	private char displayChar;
-	private boolean hasMoved; //for castling logic
-	
-	public Rook(Point location, boolean isWhite) {
-		this.location = location;
-		this.isWhite = isWhite;
-		this.hasMoved = false;
-		if(isWhite) {
-			this.displayChar = 'R';
-		} else {
-			this.displayChar = 'r';
-		}
-	}
+public class Rook implements Piece {
 
-	public char getChar() { return displayChar; }
-	public boolean getColor() { return isWhite; } //returns true if it is white
-	public Point getLocation() { return location; }
+    private boolean isWhite;
 
-	@Override
-	public void move() {
-		
-	}
+    public Rook(boolean isWhite) { this.isWhite = isWhite; }
 
-	@Override
-	public ArrayList<Point> getValidMoves() {
-		return null;
-	}
-	
-	
-	
+    public boolean validateMove() {
+        return false;
+    }
+
+    public int[][] getValidMoves(Board board){
+        return new int[8][8];
+
+    }
+
+    public char getChar() { return isWhite ? 'R' : 'r'; }
+    
+    public boolean isWhite() { return isWhite; }
 }
