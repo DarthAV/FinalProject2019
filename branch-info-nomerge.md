@@ -6,12 +6,12 @@ that, when called, validates and moves the piece.
 
 # todo
 - finish rules
-- [ ] Bishop.java
-- [ ] King.java
-- [ ] Knight.java
-- [ ] Pawn.java
-- [ ] Rook.java
-- [ ] Queen.java
+  - [ ] Bishop.java
+  - [ ] King.java
+  - [ ] Knight.java
+  - [ ] Pawn.java
+  - [ ] Rook.java
+  - [ ] Queen.java
 
 - [ ] implement ` public Piece getPiece(Point p) ` in Board.java
 
