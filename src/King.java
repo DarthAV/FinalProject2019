@@ -1,4 +1,5 @@
 
+
 public class King implements Piece {
 
     private boolean isWhite;
@@ -17,3 +18,4 @@ public class King implements Piece {
 
     public boolean isWhite() { return isWhite; }
 }
+

@@ -1,4 +1,5 @@
 
+
 // Board handles moving, classes tell whether move is valid.
 
 public class Board {

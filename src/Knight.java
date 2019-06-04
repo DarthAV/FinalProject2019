@@ -1,4 +1,5 @@
 
+
 public class Knight implements Piece {
 
     private boolean isWhite;

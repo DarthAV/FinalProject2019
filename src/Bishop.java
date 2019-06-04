@@ -1,4 +1,3 @@
-
 public class Bishop implements Piece {
 
     private boolean isWhite;
