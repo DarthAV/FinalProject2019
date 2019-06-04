@@ -1,4 +1,4 @@
-
+import java.awt.Point;
 
 // Board handles moving, classes tell whether move is valid.
 
@@ -20,29 +20,28 @@ public class Board {
         }
 
         //we still need to work on this
-        System.out.print("     ");
-        for(int i = 1; i < 9; i++) {
-            System.out.print((char)(i+64) + "   ");
-        }
-        System.out.println();
         System.out.print("    ");
         for(int i = 1; i < 32; i++) {
             System.out.print("_");
         }
         System.out.println();
         for (int i = 0; i < visibleBoard.length; i++) {
-            System.out.print(i+1 + "  ");
+            System.out.print(8-i + "  ");
             for (int j = 0; j < visibleBoard[i].length; j++) {
                 System.out.print("|_");
                 System.out.print(visibleBoard[i][j]);
                 System.out.print("_");
-
             }
             System.out.print("|");
             System.out.println();
         }
+        System.out.println();
+        System.out.print("     ");
+        for(int i = 1; i < 9; i++) {
+            System.out.print((char)(i+64) + "   ");
+        }
+        System.out.println();
     }
-
 
     public void setBoard() {
 
@@ -98,14 +97,35 @@ public class Board {
 
     }
 
-
-
     public Piece[][] getBoard() {
 
         return board;
 
     }
 
-
+    /**
+     * 
+     * @param start
+     * @param end
+     * @return true if move was successful
+     * @return false if move was not successful
+     */
+    public boolean move(Point start, Point end) {
+    	if (board[start.y][start.x] != null) { 
+	    	Piece p = board[start.y][start.x].clone();
+	    	if (p.validateMove(board, start, end)) {
+	    		// swap op. Added benefit of taking out the piece
+	    		// at terminal position
+	    		board[start.y][start.x] = null;
+	    		drawBoard();
+	    		board[end.y][end.x] = null;
+	    		drawBoard();
+	    		board[end.y][end.x] = p;
+	    		drawBoard();
+	    		return true;
+	    	}
+    	}
+    	return false;
+    }
 
 }
