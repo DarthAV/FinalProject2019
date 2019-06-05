@@ -17,7 +17,8 @@ public class Board {
             }
         }
         
-        ChessGrid g = new ChessGrid();
+        ChessGrid g = new ChessGrid(visibleBoard);
+        
 
         System.out.print("     ");
         for(int i = 1; i < 9; i++) {

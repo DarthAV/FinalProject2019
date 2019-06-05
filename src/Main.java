@@ -4,5 +4,6 @@ public class Main {
 		Board b = new Board();
 		b.setBoard();
 		b.drawBoard();
+		
 	}
 }
