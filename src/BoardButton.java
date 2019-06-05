@@ -9,6 +9,6 @@ public class BoardButton extends JButton {
 		this.y = y;
 	}
 	
-	public int getX() { return super.getX(); }
-	public int getY() { return super.getY(); }
+	public int getX() { return this.x; }
+	public int getY() { return this.y; }
 }

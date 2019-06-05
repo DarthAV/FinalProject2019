@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.imageio.*;
 import javax.swing.*;
 
@@ -14,34 +17,15 @@ public class ChessGrid {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
 				buttons[i][j] = new BoardButton(j, i);	
-				/*
+				
 				buttons[i][j].addActionListener(new ActionListener() {
-					
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JButton clickedButton = (JButton) e.getSource();
 						System.out.println("x = " + clickedButton.getX() + "\n y = " + clickedButton.getY());
 					}
-				});*/
+				});
 				
-				if(visibleBoard[i][j] != '\0') {
-					String filePath = "images/";
-					if(Character.isUpperCase(visibleBoard[i][j]))
-						filePath += "W" + visibleBoard[i][j] + ".png";
-					else
-						filePath += "B" + visibleBoard[i][j] + ".png";
-					try {
-					    Image img = ImageIO.read(getClass().getResource(filePath));
-					    ImageIcon hi = new ImageIcon(img);
-					    buttons[i][j].setIcon(new ImageIcon(img));
-					    
-					} catch (Exception e) { System.out.println(e);}
-				
-				
-					
-				}
-					
-					
 				
 				if ((i+j) % 2 == 0)
 					buttons[i][j].setBackground(Color.WHITE);
@@ -51,7 +35,7 @@ public class ChessGrid {
 				buttons[i][j].setSize(100, 100);
 			}
 		}
-		
+		refreshGrid(visibleBoard);
 		
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
