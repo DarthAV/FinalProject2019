@@ -12,10 +12,9 @@
 
 - [x] moving pieces - both board.java and input
 ## ansh
-- [ ] formatting board correctly
-- [ ] graphics
+- [x] formatting board correctly
 - [ ] pawn promotion selection
-- [ ] white or black selection
+- [ ] start screen
 
 # notes - ved
 - see my ved-move branch for the move method that buttons can call. 
