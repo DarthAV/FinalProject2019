@@ -1,6 +1,9 @@
-
+import java.awt.Point;
+import java.util.Scanner;
 
 // Board handles moving, classes tell whether move is valid.
+// STATUS: INCOMPLETE
+// see move method
 
 public class Board {
     public Piece[][] board = new Piece[8][8];
@@ -17,6 +20,7 @@ public class Board {
             }
         }
 
+
         System.out.print("     ");
         for(int i = 1; i < 9; i++) {
             System.out.print((char)(i+64) + "   ");
@@ -28,18 +32,22 @@ public class Board {
         }
         System.out.println();
         for (int i = 0; i < visibleBoard.length; i++) {
-            System.out.print(i+1 + "  ");
+            System.out.print(8-i + "  ");
             for (int j = 0; j < visibleBoard[i].length; j++) {
                 System.out.print("|_");
                 System.out.print(visibleBoard[i][j]);
                 System.out.print("_");
-
             }
             System.out.print("|");
             System.out.println();
         }
+        System.out.println();
+        System.out.print("     ");
+        for(int i = 1; i < 9; i++) {
+            System.out.print((char)(i+64) + "   ");
+        }
+        System.out.println();
     }
-
 
     public void setBoard() {
 
@@ -91,14 +99,44 @@ public class Board {
 
     }
 
-
-
     public Piece[][] getBoard() {
 
         return board;
 
     }
 
-
+    /**
+     * 
+     * @param start
+     * @param end
+     * @return true if move was successful
+     * @return false if move was not successful
+     */
+    public boolean move(Point start, Point end) {
+    	if (board[start.y][start.x] != null) { 
+	    	Piece p = board[start.y][start.x].clone();
+	    	if (p.validateMove(board, start, end)) {
+	    		// swap op. Added benefit of taking out the piece
+	    		// at terminal position
+	    		board[start.y][start.x] = null;
+	    		board[end.y][end.x] = p;
+	    		System.out.println("VALID");
+	    		return true;
+	    	}
+	    	// we need to work on this promotion thing
+    		if (p instanceof Pawn && ((Pawn) p).eligibleForPromotion(board, end)) {
+    			Scanner sc = new Scanner(System.in);
+    			System.out.print("Promote to? (Q, R, N, B) ");
+    			char x = sc.next().charAt(0);
+    			board[end.y][end.x] = null;
+    			if (x == 'Q') board[end.y][end.x] = new Queen(p.isWhite());
+    			if (x == 'R') board[end.y][end.x] = new Rook(p.isWhite());
+    			if (x == 'N') board[end.y][end.x] = new Knight(p.isWhite());
+    			if (x == 'B') board[end.y][end.x] = new Bishop(p.isWhite());
+    		}
+    	}
+    	System.out.println("INVALID");
+    	return false;
+    }
 
 }
