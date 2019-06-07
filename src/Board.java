@@ -17,12 +17,21 @@ public class Board {
         
         Graphics g = new Graphics(visibleBoard);
         
-        //after any move call this method, not sure if it works
-        g.refresh(visibleBoard);
-        
         //after pawn reaches end call this method
        	g.chooseNewPiece(true);
+        System.out.println("end");
+
+        try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        visibleBoard[5][5] = 'R';
+
+        g.refresh(visibleBoard);
         
+
 /*
         System.out.print("     ");
         for(int i = 1; i < 9; i++) {

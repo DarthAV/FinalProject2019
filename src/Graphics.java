@@ -6,14 +6,14 @@ import javax.imageio.*;
 import javax.swing.*;
 
 public class Graphics {
-	JFrame mainPanel;  
-	JFrame promotionMenu;
+	private JFrame mainPanel;  
+	private JFrame promotionMenu;
 	
-	PieceSelectionButton[] optionButtons;
-	BoardButton[][] buttons;
+	private PieceSelectionButton[] optionButtons;
+	private BoardButton[][] buttons;
 	
-	Piece chosenPiece = null;
-	boolean chosen = false;
+	private Piece chosenPiece = null;
+	private boolean chosen = false;
 	
 	public Graphics(char[][] visibleBoard) {  
 		mainPanel = new JFrame();  
@@ -21,6 +21,8 @@ public class Graphics {
 		
 		mainPanel.setTitle("Chess Game");
 		mainPanel.setResizable(false); 
+		
+		
 		
 		
 		for(int i = 0; i < buttons.length; i++) {
@@ -43,7 +45,6 @@ public class Graphics {
 				
 				buttons[i][j].setSize(100, 100);
 				
-				
 				if(visibleBoard[i][j] != '\0') {
 					String filePath = "Images/";
 					filePath += Character.isUpperCase(visibleBoard[i][j]) ? "W" : "B";
@@ -53,9 +54,8 @@ public class Graphics {
 					    buttons[i][j].setIcon(new ImageIcon(img));
 					    
 					} catch (Exception e) { System.out.println(e);}
-				
-				
 				}	
+					
 		
 				mainPanel.add(buttons[i][j]);
 			}
@@ -66,6 +66,9 @@ public class Graphics {
 		mainPanel.setDefaultCloseOperation(3); //ends program after closing window
 			
 	}  
+	
+	
+	
 	
 	//im not sure how well this works
 	public void refresh(char[][] newBoard) {
@@ -82,22 +85,26 @@ public class Graphics {
 					} catch (Exception e) { System.out.println(e);}
 				
 				
-				}	
-				if(newBoard[i][j] == '\0') {
+				}
+				else {
 					buttons[i][j].setIcon(null);
 				}
 			}
 		}
 	}
 	
+	
+	
+	
 	public Piece chooseNewPiece(boolean isWhite) {
 
 		//disable the chess board until the piece is selected
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
-		
+				buttons[i][j].setEnabled(false);
 			}
 		}
+		
 		promotionMenu = new JFrame(); 
 		optionButtons = new PieceSelectionButton[4];
 		
@@ -147,8 +154,22 @@ public class Graphics {
 		promotionMenu.setDefaultCloseOperation(0); //if red x is pressed dont close menu
 		System.out.println("Choose a piece to promote to");
 		
-		while(!chosen) { }
+		while(!chosen) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
+		
+		//reenable the chess board until the piece is selected
+		for(int i = 0; i < buttons.length; i++) {
+			for(int j = 0; j < buttons.length; j++) {
+				buttons[i][j].setEnabled(true);
+			}
+		}
 		
 		return chosenPiece;
 		
