@@ -1,11 +1,10 @@
-# rules for moving pieces
-
 # pawn
 
 - [x] moving
     - one square up
     - capturing
     - first move advantage
+    - can't put its king in check
 - [x] capture
     - diagonal not forward
     - only if piece to capture
@@ -14,21 +13,27 @@
 
 # king
 
-- [ ] moving
+- [x] moving
     - one square only in any direction
-- [ ] castling
+    - can't put itself in check
+- [x] castling
     - hasMovedAlready
     - check Rook as well
     - check for pieces in between
-- [ ] check same color capture
-- [ ] check board boundaries
-- [ ] check(mate)
+- [x] check same color capture
+- [x] check board boundaries
+- [ ] check
+    - in other words, is its pos any of the other color's pieces' valid moves?
+- [x] checkmate
+    - is it in check?
+    - are all the positions that the king can move into in other color's pieces' valid moves?
 
 # rook
 
 - [ ] moving
     - check if in same column or row not both
     - can't travel over pieces
+    - can't put its king in check
 - [ ] castling
     - hasMovedAlready
 - [ ] check same color capture
@@ -37,6 +42,7 @@
 - [ ] moving
     - check diagonals
     - can't travel over pieces
+    - can't put its king in check
 - [ ] check same color capture
 
 # queen
@@ -49,4 +55,5 @@
 - [ ] moving
     - only 8 places to move
     - *can* travel over pieces
+    - can't put its king in checks
 - [ ] check same color capture
