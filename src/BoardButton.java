@@ -1,14 +1,14 @@
-import javax.swing.*;
+import javax.swing.JButton;
 
 public class BoardButton extends JButton {
-	public int x;
-	public int y;
+	public int xLocation;
+	public int yLocation;
 	
-	public BoardButton(int x, int y) {
-		this.x = x;
-		this.y = y;
+	public BoardButton(int xLocation, int yLocation) {
+		this.xLocation = xLocation;
+		this.yLocation = yLocation;
 	}
 	
-	public int getX() { return this.x; }
-	public int getY() { return this.y; }
+	public int getXLocation() { return this.xLocation; }
+	public int getYLocation() { return this.yLocation; }
 }

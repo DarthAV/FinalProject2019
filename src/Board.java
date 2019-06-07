@@ -1,5 +1,4 @@
 
-
 // Board handles moving, classes tell whether move is valid.
 
 public class Board {
@@ -13,13 +12,18 @@ public class Board {
                 if(spot != null) {
                     visibleBoard[i][j] = spot.getChar();
                 }
-
             }
         }
         
-        ChessGrid g = new ChessGrid(visibleBoard);
+        ChessBoard gui = new ChessBoard(visibleBoard);
         
-
+        //after any move call this method, not sure if it works
+//        	gui.refresh(visibleBoard);
+        
+        //after pawn reaches end call this method
+//        	gui.chooseNewPiece(true);
+        
+/*
         System.out.print("     ");
         for(int i = 1; i < 9; i++) {
             System.out.print((char)(i+64) + "   ");
@@ -41,7 +45,7 @@ public class Board {
             System.out.print("|");
             System.out.println();
         }
-    }
+*/    }
 
 
     public void setBoard() {
