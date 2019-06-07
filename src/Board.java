@@ -16,11 +16,27 @@ public class Board {
                 if(spot != null) {
                     visibleBoard[i][j] = spot.getChar();
                 }
-
             }
         }
+      
+        Graphics g = new Graphics(visibleBoard);
+        
+        //after pawn reaches end call this method
+       	g.chooseNewPiece(true);
+        System.out.println("end");
 
+        try {
+			      Thread.sleep(1000);
+		    } catch (InterruptedException e) {
+			      // TODO Auto-generated catch block
+			      e.printStackTrace();
+		    }
+        visibleBoard[5][5] = 'R';
 
+        g.refresh(visibleBoard);
+        
+
+        /*
         System.out.print("     ");
         for(int i = 1; i < 9; i++) {
             System.out.print((char)(i+64) + "   ");
@@ -40,14 +56,9 @@ public class Board {
             }
             System.out.print("|");
             System.out.println();
-        }
-        System.out.println();
-        System.out.print("     ");
-        for(int i = 1; i < 9; i++) {
-            System.out.print((char)(i+64) + "   ");
-        }
-        System.out.println();
+        } */    
     }
+
 
     public void setBoard() {
 
