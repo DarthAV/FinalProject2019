@@ -1,6 +1,9 @@
 import java.awt.Point;
+import java.util.Scanner;
 
 // Board handles moving, classes tell whether move is valid.
+// STATUS: INCOMPLETE
+// see move method
 
 public class Board {
     public Piece[][] board = new Piece[8][8];
@@ -117,14 +120,23 @@ public class Board {
 	    		// swap op. Added benefit of taking out the piece
 	    		// at terminal position
 	    		board[start.y][start.x] = null;
-	    		drawBoard();
-	    		board[end.y][end.x] = null;
-	    		drawBoard();
 	    		board[end.y][end.x] = p;
-	    		drawBoard();
+	    		System.out.println("VALID");
 	    		return true;
 	    	}
+	    	// we need to work on this promotion thing
+    		if (p instanceof Pawn && ((Pawn) p).eligibleForPromotion(board, end)) {
+    			Scanner sc = new Scanner(System.in);
+    			System.out.print("Promote to? (Q, R, N, B) ");
+    			char x = sc.next().charAt(0);
+    			board[end.y][end.x] = null;
+    			if (x == 'Q') board[end.y][end.x] = new Queen(p.isWhite());
+    			if (x == 'R') board[end.y][end.x] = new Rook(p.isWhite());
+    			if (x == 'N') board[end.y][end.x] = new Knight(p.isWhite());
+    			if (x == 'B') board[end.y][end.x] = new Bishop(p.isWhite());
+    		}
     	}
+    	System.out.println("INVALID");
     	return false;
     }
 

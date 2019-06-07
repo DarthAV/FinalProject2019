@@ -11,8 +11,8 @@ public class Queen implements Piece {
         return false;
     }
 
-    public ArrayList<Point[]> getValidMoves(Piece[][] board){
-        return new ArrayList<Point[]>();
+    public boolean[][] getValidMoves(Piece[][] board, Point pos){
+        return new boolean[8][8];
     }
 
     public char getChar() { return isWhite ? 'Q' : 'q'; }
