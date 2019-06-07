@@ -22,8 +22,8 @@
     - check for pieces in between
 - [x] check same color capture
 - [x] check board boundaries
-- [ ] check
-    - in other words, is its pos any of the other color's pieces' valid moves?
+- [x] check
+    - in other words, is its position in any of the other color's pieces' valid moves?
 - [x] checkmate
     - is it in check?
     - are all the positions that the king can move into in other color's pieces' valid moves?
