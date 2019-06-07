@@ -15,13 +15,13 @@ public class Board {
             }
         }
         
-        ChessBoard gui = new ChessBoard(visibleBoard);
+        Graphics g = new Graphics(visibleBoard);
         
         //after any move call this method, not sure if it works
-//        	gui.refresh(visibleBoard);
+        g.refresh(visibleBoard);
         
         //after pawn reaches end call this method
-//        	gui.chooseNewPiece(true);
+       	g.chooseNewPiece(true);
         
 /*
         System.out.print("     ");
