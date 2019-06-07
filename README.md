@@ -13,7 +13,7 @@
 - [x] moving pieces - both board.java and input
 ## ansh
 - [x] formatting board correctly
-- [ ] pawn promotion selection
+- [x] pawn promotion selection
 - [ ] start screen
 
 # notes - ved
