@@ -9,6 +9,8 @@ public class Graphics {
 	private JFrame mainPanel;  
 	private JFrame promotionMenu;
 	
+	private char[][] charBoard;
+	
 	private PieceSelectionButton[] optionButtons;
 	private BoardButton[][] buttons;
 	
@@ -18,13 +20,15 @@ public class Graphics {
 	public Graphics(char[][] visibleBoard) {  
 		mainPanel = new JFrame();  
 		buttons = new BoardButton[8][8];
+		charBoard = visibleBoard;
 		
 		mainPanel.setTitle("Chess Game");
 		mainPanel.setResizable(false); 
 		
-		
-		
-		
+		this.populateBoard();
+	}
+	
+	private void populateBoard() {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
 				buttons[i][j] = new BoardButton(j, i);	
@@ -45,10 +49,10 @@ public class Graphics {
 				
 				buttons[i][j].setSize(100, 100);
 				
-				if(visibleBoard[i][j] != '\0') {
+				if(charBoard[i][j] != '\0') {
 					String filePath = "Images/";
-					filePath += Character.isUpperCase(visibleBoard[i][j]) ? "W" : "B";
-					filePath += visibleBoard[i][j] + ".png";
+					filePath += Character.isUpperCase(charBoard[i][j]) ? "W" : "B";
+					filePath += charBoard[i][j] + ".png";
 					try {
 					    Image img = ImageIO.read(getClass().getResource(filePath));
 					    buttons[i][j].setIcon(new ImageIcon(img));
@@ -66,25 +70,26 @@ public class Graphics {
 		mainPanel.setDefaultCloseOperation(3); //ends program after closing window
 			
 	}  
+		
+	public void setNewSource(char[][] newBoard) {
+		this.charBoard = newBoard;
+	}
 	
 	
-	
-	
-	//im not sure how well this works
-	public void refresh(char[][] newBoard) {
+	public void refresh() {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
-				if(newBoard[i][j] != '\0') {
+				if(charBoard[i][j] != '\0') {
 					String filePath = "Images/";
-					filePath += Character.isUpperCase(newBoard[i][j]) ? "W" : "B";
-					filePath += newBoard[i][j] + ".png";
+					filePath += Character.isUpperCase(charBoard[i][j]) ? "W" : "B";
+					filePath += charBoard[i][j] + ".png";
 					try {
 					    Image img = ImageIO.read(getClass().getResource(filePath));
 					    buttons[i][j].setIcon(new ImageIcon(img));
 					    
 					} catch (Exception e) { System.out.println(e);}
-				
-				
+					
+					
 				}
 				else {
 					buttons[i][j].setIcon(null);
@@ -124,7 +129,6 @@ public class Graphics {
 				public void actionPerformed(ActionEvent e) {
 					PieceSelectionButton caller = (PieceSelectionButton) e.getSource();
 					chosenPiece = caller.getHeldPiece();
-					System.out.println(chosenPiece.getChar());
 					chosen = true;
 					promotionMenu.dispose();
 				}
@@ -151,12 +155,12 @@ public class Graphics {
 		promotionMenu.setLayout(new GridLayout(1, 4));
 		promotionMenu.setResizable(false); 
 		promotionMenu.setVisible(true);
-		promotionMenu.setDefaultCloseOperation(0); //if red x is pressed dont close menu
+		promotionMenu.setDefaultCloseOperation(0); //if red x is pressed don't close menu
 		System.out.println("Choose a piece to promote to");
 		
 		while(!chosen) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(300);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

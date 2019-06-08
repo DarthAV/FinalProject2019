@@ -9,10 +9,10 @@ public class Rook implements Piece {
     public Rook(boolean isWhite) { this.isWhite = isWhite; }
 
     public boolean validateMove(Piece[][] board, Point start, Point end) {
-    	if ((tart.x != end.x))
+    	//if ((start.x != end.x))
     	
     	
-        return true;
+		return true;
     }
 
     public boolean[][] getValidMoves(Piece[][] board, Point pos){
