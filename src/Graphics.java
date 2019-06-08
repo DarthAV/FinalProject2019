@@ -174,7 +174,7 @@ public class Graphics {
 				buttons[i][j].setEnabled(true);
 			}
 		}
-		
+		chosen = false;
 		return chosenPiece;
 		
 	}

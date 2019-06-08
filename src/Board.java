@@ -25,27 +25,6 @@ public class Board {
         g.setNewSource(visibleBoard);
         g.refresh();
         
-        /*
-        System.out.print("     ");
-        for(int i = 1; i < 9; i++) {
-            System.out.print((char)(i+64) + "   ");
-        }
-        System.out.println();
-        System.out.print("    ");
-        for(int i = 1; i < 32; i++) {
-            System.out.print("_");
-        }
-        System.out.println();
-        for (int i = 0; i < visibleBoard.length; i++) {
-            System.out.print(8-i + "  ");
-            for (int j = 0; j < visibleBoard[i].length; j++) {
-                System.out.print("|_");
-                System.out.print(visibleBoard[i][j]);
-                System.out.print("_");
-            }
-            System.out.print("|");
-            System.out.println();
-        } */    
     }
 
 
@@ -93,14 +72,14 @@ public class Board {
 	    		// at terminal position
 	    		board[start.y][start.x] = null;
 	    		board[end.y][end.x] = p;
-	            this.drawBoard();
-	    		isValid = true;
+	            isValid = true;
 	    	}
     		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
 				board[end.y][end.x] = g.chooseNewPiece(p.isWhite());
     		}
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
+    	this.drawBoard();
     	return isValid;
     }
 
