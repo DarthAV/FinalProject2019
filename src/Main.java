@@ -20,5 +20,8 @@ public class Main {
 		b.move(new Point(4, 4), new Point(4, 5));
 		b.move(new Point(4, 5), new Point(4, 6));
 		b.move(new Point(4, 6), new Point(3, 7));
+
+		// Black King
+		b.move(new Point(5, 0), new Point(6, 1));
 	}
 }

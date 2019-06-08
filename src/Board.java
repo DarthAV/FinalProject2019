@@ -72,6 +72,7 @@ public class Board {
 	    		// at terminal position
 	    		board[start.y][start.x] = null;
 	    		board[end.y][end.x] = p;
+	        	this.drawBoard();
 	            isValid = true;
 	    	}
     		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
