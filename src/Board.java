@@ -23,7 +23,7 @@ public class Board {
         }
         
         g.setNewSource(visibleBoard);
-        g.refresh();
+        g.refreshPieces();
         
     }
 
