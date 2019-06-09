@@ -37,7 +37,7 @@ public class Graphics {
 		JLabel textArea = new JLabel(text);
 	    textArea.setFocusable(false);
 		textArea.setFont(new Font("Comic Sans MS", 60, 60));
-		//title.
+		
 		
 		startScreen.add(textArea, BorderLayout.PAGE_START);
 		
