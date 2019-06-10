@@ -1,5 +1,5 @@
-import java.awt.Point;
-import java.util.Scanner;
+import java.awt.*;
+import java.util.*;
 
 // Board handles moving, classes tell whether move is valid.
 // STATUS: INCOMPLETE
@@ -7,7 +7,11 @@ import java.util.Scanner;
 
 public class Board {
     public Piece[][] board = new Piece[8][8];
-
+    private char[][] visibleBoard = new char[8][8];
+    private Graphics g = new Graphics(visibleBoard);
+    Map<String, Point> icons = new HashMap<String, Point>();
+    
+    
     public void drawBoard() {
         char[][] visibleBoard = new char[8][8];
         for (int i = 0; i < board.length; i++) {
@@ -18,104 +22,41 @@ public class Board {
                 }
             }
         }
-      
-        Graphics g = new Graphics(visibleBoard);
         
-        //after pawn reaches end call this method
-       	g.chooseNewPiece(true);
-        System.out.println("end");
-
-        try {
-			      Thread.sleep(1000);
-		    } catch (InterruptedException e) {
-			      // TODO Auto-generated catch block
-			      e.printStackTrace();
-		    }
-        visibleBoard[5][5] = 'R';
-
-        g.refresh(visibleBoard);
+        g.setNewSource(visibleBoard);
+        g.refreshPieces();
         
-
-        /*
-        System.out.print("     ");
-        for(int i = 1; i < 9; i++) {
-            System.out.print((char)(i+64) + "   ");
-        }
-        System.out.println();
-        System.out.print("    ");
-        for(int i = 1; i < 32; i++) {
-            System.out.print("_");
-        }
-        System.out.println();
-        for (int i = 0; i < visibleBoard.length; i++) {
-            System.out.print(8-i + "  ");
-            for (int j = 0; j < visibleBoard[i].length; j++) {
-                System.out.print("|_");
-                System.out.print(visibleBoard[i][j]);
-                System.out.print("_");
-            }
-            System.out.print("|");
-            System.out.println();
-        } */    
     }
 
 
-    public void setBoard() {
-
+    public void resetBoard() {
         board[0][0] = new Rook(false);
-
         board[0][1] = new Knight(false);
-
         board[0][2] = new Bishop(false);
-
         board[0][3] = new Queen(false);
-
         board[0][4] = new King(false);
-
         board[0][5] = new Bishop(false);
-
         board[0][6] = new Knight(false);
-
         board[0][7] = new Rook(false);
-
+        
         for (int i = 0; i < board[1].length; i++) {
-
             board[1][i] = new Pawn(false);
-
-        }
-
-        for (int i = 0; i < board[1].length; i++) {
-
             board[6][i] = new Pawn(true);
-
         }
-
+        
         board[7][0] = new Rook(true);
-
         board[7][1] = new Knight(true);
-
         board[7][2] = new Bishop(true);
-
         board[7][3] = new Queen(true);
-
         board[7][4] = new King(true);
-
         board[7][5] = new Bishop(true);
-
         board[7][6] = new Knight(true);
-
         board[7][7] = new Rook(true);
-
-
-
     }
 
-    public Piece[][] getBoard() {
+    public Piece[][] getBoard() { return board; }
 
-        return board;
-
-    }
-
+    
     /**
      * 
      * @param start
@@ -124,6 +65,7 @@ public class Board {
      * @return false if move was not successful
      */
     public boolean move(Point start, Point end) {
+    	boolean isValid = false;
     	if (board[start.y][start.x] != null) { 
 	    	Piece p = board[start.y][start.x].clone();
 	    	if (p.validateMove(board, start, end)) {
@@ -131,23 +73,20 @@ public class Board {
 	    		// at terminal position
 	    		board[start.y][start.x] = null;
 	    		board[end.y][end.x] = p;
-	    		System.out.println("VALID");
-	    		return true;
+	        	this.drawBoard();
+	            isValid = true;
 	    	}
-	    	// we need to work on this promotion thing
-    		if (p instanceof Pawn && ((Pawn) p).eligibleForPromotion(board, end)) {
-    			Scanner sc = new Scanner(System.in);
-    			System.out.print("Promote to? (Q, R, N, B) ");
-    			char x = sc.next().charAt(0);
-    			board[end.y][end.x] = null;
-    			if (x == 'Q') board[end.y][end.x] = new Queen(p.isWhite());
-    			if (x == 'R') board[end.y][end.x] = new Rook(p.isWhite());
-    			if (x == 'N') board[end.y][end.x] = new Knight(p.isWhite());
-    			if (x == 'B') board[end.y][end.x] = new Bishop(p.isWhite());
+    		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
+				board[end.y][end.x] = g.chooseNewPiece(p.isWhite());
     		}
     	}
-    	System.out.println("INVALID");
-    	return false;
+    	System.out.println(isValid ? "VALID" : "INVALID");
+    	//long time
+    	//System.out.println(time);
+    	this.drawBoard();
+    	Main.clickedStart = null;
+    	Main.clickedEnd = null;
+    	return isValid;
     }
 
 }
