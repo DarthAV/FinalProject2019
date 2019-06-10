@@ -1,5 +1,5 @@
-import java.awt.Point;
-import java.util.Scanner;
+import java.awt.*;
+import java.util.*;
 
 // Board handles moving, classes tell whether move is valid.
 // STATUS: INCOMPLETE
@@ -80,7 +80,10 @@ public class Board {
     		}
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
+
     	this.drawBoard();
+    	Main.clickedStart = null;
+    	Main.clickedEnd = null;
     	return isValid;
     }
 

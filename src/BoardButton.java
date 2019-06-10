@@ -1,14 +1,12 @@
+import java.awt.Point;
 import javax.swing.JButton;
 
 public class BoardButton extends JButton {
-	public int xLocation;
-	public int yLocation;
+	private Point location;
 	
-	public BoardButton(int xLocation, int yLocation) {
-		this.xLocation = xLocation;
-		this.yLocation = yLocation;
+	public BoardButton(Point location) {
+		this.location = location;
 	}
 	
-	public int getXLocation() { return this.xLocation; }
-	public int getYLocation() { return this.yLocation; }
+	public Point getLocation() { return this.location; }
 }

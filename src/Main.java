@@ -1,10 +1,23 @@
 import java.awt.Point;
 
 public class Main {
+	public static Point clickedStart;
+	public static Point clickedEnd;
 	public static void main(String[] args) {
 		Board b = new Board();
 		b.resetBoard();
 		b.drawBoard();
+		while(true) {
+			while(clickedStart == null || clickedEnd == null) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			b.move(clickedStart, clickedEnd);
+		}
 		/* Tests:
 		 * 
 		 * put a comment that says "should be invalid" next to all
@@ -12,7 +25,7 @@ public class Main {
 		 *  
 		 */
 		// White Pawn
-		b.move(new Point(4, 6), new Point(4, 4));
+		/*b.move(new Point(4, 6), new Point(4, 4));
 		b.move(new Point(4, 4), new Point(4, 3));
 		b.move(new Point(4, 3), new Point(5, 2)); //should be invalid
 		b.move(new Point(4, 3), new Point(4, 2));
@@ -29,6 +42,7 @@ public class Main {
 		b.move(new Point(4, 6), new Point(3, 7));
 
 		// White King
-		b.move(new Point(4, 7), new Point(3, 7)); 
+		b.move(new Point(4, 7), new Point(3, 7)); */
+
 	}
 }
