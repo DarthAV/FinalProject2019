@@ -9,7 +9,6 @@ public class Board {
     public Piece[][] board = new Piece[8][8];
     private char[][] visibleBoard = new char[8][8];
     private Graphics g = new Graphics(visibleBoard);
-    Map<String, Point> icons = new HashMap<String, Point>();
     
     
     public void drawBoard() {
@@ -81,8 +80,7 @@ public class Board {
     		}
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
-    	//long time
-    	//System.out.println(time);
+
     	this.drawBoard();
     	Main.clickedStart = null;
     	Main.clickedEnd = null;

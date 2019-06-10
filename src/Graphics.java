@@ -16,7 +16,7 @@ public class Graphics {
 	private boolean chosen = false;
 	private boolean canContinue = false;
 	
-	
+
 	public Graphics(char[][] visibleBoard) {  
 		startScreen = new JFrame();
 		mainPanel = new JFrame();  
@@ -34,7 +34,7 @@ public class Graphics {
 		
 		String text = "<html><div style='text-align: center;'>Welcome to Chess, by Ansh Verma and Ved Thiru</div></html>";
 		JLabel textArea = new JLabel(text);
-	    textArea.setFocusable(false);
+	  textArea.setFocusable(false);
 		textArea.setFont(new Font("Comic Sans MS", 60, 60));
 		
 		
@@ -44,7 +44,7 @@ public class Graphics {
 		
 		JButton startButton = new JButton();
 		startButton.setText("Play Chess!");
-		startButton.setBackground(Color.YELLOW);
+		startButton.setBackground(Color.GRAY);
 	    startButton.setFocusable(false);
 		startButton.addActionListener(new ActionListener() {
 			@Override
@@ -53,7 +53,7 @@ public class Graphics {
 			}
 		});
 		startScreen.add(startButton, BorderLayout.CENTER);
-		
+				
 		startScreen.setSize(600,600); 
 		startScreen.setLocationRelativeTo(null);
 		startScreen.setTitle("Start Screen");
@@ -61,7 +61,7 @@ public class Graphics {
 		startScreen.setVisible(true);
 		startScreen.setDefaultCloseOperation(3); 
 		
-		
+
 		while(!canContinue) {
 			try {
 				Thread.sleep(500);

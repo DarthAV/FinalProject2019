@@ -43,5 +43,6 @@ public class Main {
 
 		// White King
 		b.move(new Point(4, 7), new Point(3, 7)); */
+
 	}
 }
