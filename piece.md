@@ -50,7 +50,7 @@
     - then use respective method
 - [x] check same color capture
 
-# knight (MOVES ONE EXTRA SQUARE, VALVE, PLS FIX)
+# knight (MOVES ONE EXTRA SQUARE, ALSO, CAN CAPTURE TEAMMATES)
 - [x] moving
     - only 8 places to move
     - *can* travel over pieces
