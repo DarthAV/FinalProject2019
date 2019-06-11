@@ -16,7 +16,9 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 Piece spot = board[i][j];
-                if(spot != null) {
+                if(spot == null) {
+                    //visibleBoard[i][j] = '.';
+                } else {
                     visibleBoard[i][j] = spot.getChar();
                 }
             }
@@ -26,7 +28,6 @@ public class Board {
         g.refreshPieces();
         
     }
-
 
     public void resetBoard() {
         board[0][0] = new Rook(false);
@@ -70,21 +71,34 @@ public class Board {
 	    	if (p.validateMove(board, start, end)) {
 	    		// swap op. Added benefit of taking out the piece
 	    		// at terminal position
+	    		isValid = true;
 	    		board[start.y][start.x] = null;
 	    		board[end.y][end.x] = p;
-	        	this.drawBoard();
-	            isValid = true;
 	    	}
     		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
 				board[end.y][end.x] = g.chooseNewPiece(p.isWhite());
     		}
+    		// king's check
+    		
+    		
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
-
     	this.drawBoard();
     	Main.clickedStart = null;
     	Main.clickedEnd = null;
     	return isValid;
+    }
+    // this doesn't work, see https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation
+    public String getFEN() {
+    	String r = "";
+    	for (Piece[] row: board) {
+    		for (Piece p : row) {
+    			r += (p == null) ? '0' : p.getChar();
+    		}
+    		r += '/';
+    	}
+    	r = r.replace("00000000","8");
+    	return r;
     }
 
 }

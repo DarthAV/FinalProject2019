@@ -12,6 +12,9 @@ public class Pawn implements Piece {
     public Pawn(boolean isWhite) { this(isWhite, false); }
 
     public boolean validateMove(Piece[][] board, Point start, Point end) {
+    	// check board boundaries
+        if (end.x < 0 || end.x > board[0].length) { return false; }
+        if (end.y < 0 || end.y > board.length) { return false; }
         
     	if (board[end.y][end.x] != null && board[end.y][end.x].isWhite() == this.isWhite) { return false; }
         // same column check, UNLESS CAPTURE, then check adjacent
@@ -26,10 +29,6 @@ public class Pawn implements Piece {
         if ((isWhite && start.x == end.x && board[start.y-1][start.x] != null) || (!isWhite && start.x == end.x && board[start.y+1][start.x] != null)) {
         	return false;
         }
-        
-        // check board boundaries
-        if (end.x < 0 || end.x > board[0].length) { return false; }
-        if (end.y < 0 || end.y > board.length) { return false; }
         
         // first move adv
         if ((!hasMoved && Math.abs(start.y - end.y) == 2)) {

@@ -31,7 +31,13 @@ public class King implements Piece {
     }
 
     public boolean[][] getValidMoves(Piece[][] board, Point pos){
-        return new boolean[8][8];
+    	boolean[][] r = new boolean[board.length][board[0].length];
+    	for (int i = 0; i < board.length; i++) {
+    		for (int j = 0; j < board[i].length; j++) {
+    			r[i][j] = validateMove(board, pos, new Point(j, i));
+    		}
+    	}
+    	return r;
     }
 
     public char getChar() { return isWhite ? 'K' : 'k'; }

@@ -1,3 +1,4 @@
+
 import java.awt.Point;
 
 public class Main {
@@ -43,6 +44,14 @@ public class Main {
 
 		// White King
 		b.move(new Point(4, 7), new Point(3, 7)); */
+    // Rook
+    //b.move(new Point(7, 7), new Point(7, 2));
+    //b.drawBoard();
+    // bishop
+    //b.move(new Point(1, 6), new Point(1, 4));
+    //b.move(new Point(2, 7), new Point(0, 5));
+    //b.drawBoard();
+        // System.out.print(b.getFEN());
 
 	}
 }
