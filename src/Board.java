@@ -89,7 +89,14 @@ public class Board {
     	Main.clickedEnd = null;
     	return isValid;
     }
-    // this doesn't work, see https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation
+    
+    public boolean[][] getValidMoves(Point pos) {
+    	if(board[pos.y][pos.x] != null)
+    		return board[pos.y][pos.x].getValidMoves(board, pos);
+    	return new boolean[8][8];
+    }
+    
+    // this doesn't work, see https://en.wikipedia.org/wiki/Forsyth-Edwards_Notation
     public String getFEN() {
     	String r = "";
     	for (Piece[] row: board) {

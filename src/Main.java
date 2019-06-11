@@ -4,8 +4,9 @@ import java.awt.Point;
 public class Main {
 	public static Point clickedStart;
 	public static Point clickedEnd;
+	public static Board b;
 	public static void main(String[] args) {
-		Board b = new Board();
+		b = new Board();
 		b.resetBoard();
 		b.drawBoard();
 		while(true) {
