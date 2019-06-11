@@ -29,7 +29,7 @@
     - is it in check?
     - are all the positions that the king can move into in other color's pieces' valid moves?
 
-# rook
+# rook (NOT WORKING, ONLY MOVES UP AND LEFT)
 
 - [x] moving
     - check if in same column or row not both
@@ -38,19 +38,19 @@
     - hasMovedAlready
 - [x] check same color capture
 
-# bishop
+# bishop (NOT WORKING, VALVE, PLS FIX)
 - [x] moving
     - check diagonals
     - can't travel over pieces
 - [x] check same color capture
 
-# queen
+# queen (NOT MOVING)
 - [x] moving
     - check if it is moving like rook or bishop
     - then use respective method
 - [x] check same color capture
 
-# knight
+# knight (MOVES ONE EXTRA SQUARE, VALVE, PLS FIX)
 - [x] moving
     - only 8 places to move
     - *can* travel over pieces

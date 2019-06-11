@@ -83,6 +83,7 @@ public class Board {
     		
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
+
     	this.drawBoard();
     	Main.clickedStart = null;
     	Main.clickedEnd = null;
