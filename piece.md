@@ -1,10 +1,12 @@
+# BOARD MOVE
+- [ ] a move cannot put that piece's king in check.
+
 # pawn
 
 - [x] moving
     - one square up
     - capturing
     - first move advantage
-    - can't put its king in check
 - [x] capture
     - diagonal not forward
     - only if piece to capture
@@ -15,8 +17,7 @@
 
 - [x] moving
     - one square only in any direction
-    - can't put itself in check
-- [x] castling
+    - [x] castling
     - hasMovedAlready
     - check Rook as well
     - check for pieces in between
@@ -30,30 +31,35 @@
 
 # rook
 
-- [ ] moving
+- [x] moving
     - check if in same column or row not both
     - can't travel over pieces
-    - can't put its king in check
-- [ ] castling
+- [x] castling
     - hasMovedAlready
-- [ ] check same color capture
+- [x] check same color capture
 
 # bishop
-- [ ] moving
+- [x] moving
     - check diagonals
     - can't travel over pieces
-    - can't put its king in check
-- [ ] check same color capture
+- [x] check same color capture
 
 # queen
-- [ ] moving
+- [x] moving
     - check if it is moving like rook or bishop
     - then use respective method
-- [ ] check same color capture
+- [x] check same color capture
 
 # knight
-- [ ] moving
+- [x] moving
     - only 8 places to move
     - *can* travel over pieces
-    - can't put its king in checks
-- [ ] check same color capture
+- [x] check same color capture
+
+# board
+if we're going to use a chess engine the uci protocol is supported by StockFish which takes in a FEN representation of the board as i have implemented in getFEN()  
+StockFish returns a message like below:  
+`'bestmove e2e4 ponder e7e5'`  
+where `bestmove` is the computer's move
+and `ponder` is the best move for the opponent
+after the computer has moved.
