@@ -2,15 +2,8 @@
 
 # todo
 ## ved
-- [ ] moving rules
-  - [ ] Bishop
-  - [x] Pawn
-  - [ ] King
-  - [ ] Knight
-  - [ ] Queen
-  - [ ] Rook
+- [ ] moving rules - see piece.md
 
-- [x] moving pieces - both board.java and input
 ## ansh
 - [x] formatting board correctly
 - [x] pawn promotion selection
