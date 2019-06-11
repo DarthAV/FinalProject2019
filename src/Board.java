@@ -80,7 +80,8 @@ public class Board {
     		}
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
-
+    	//long time
+    	//System.out.println(time);
     	this.drawBoard();
     	Main.clickedStart = null;
     	Main.clickedEnd = null;

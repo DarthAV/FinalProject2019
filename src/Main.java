@@ -10,7 +10,7 @@ public class Main {
 		while(true) {
 			while(clickedStart == null || clickedEnd == null) {
 				try {
-					Thread.sleep(1);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -43,6 +43,5 @@ public class Main {
 
 		// White King
 		b.move(new Point(4, 7), new Point(3, 7)); */
-
 	}
 }

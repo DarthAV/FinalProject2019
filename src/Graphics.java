@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
-
+import java.io.*;
+import java.util.*;
 import javax.imageio.*;
 import javax.swing.*;
 
@@ -15,14 +15,25 @@ public class Graphics {
 	private Piece chosenPiece = null;
 	private boolean chosen = false;
 	private boolean canContinue = false;
+	private Map<String, Image> images = new HashMap<String, Image>();
 	
-
+	
 	public Graphics(char[][] visibleBoard) {  
 		startScreen = new JFrame();
 		mainPanel = new JFrame();  
 		buttons = new BoardButton[8][8];
 		charBoard = visibleBoard;
 		
+		File[] files = new File("Resources/Images/").listFiles();
+		for (File file : files) {
+			try {
+				images.put(file.getName(), ImageIO.read(file));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		mainPanel.setTitle("Chess Game");
 		mainPanel.setResizable(false); 
 		
@@ -34,9 +45,10 @@ public class Graphics {
 		
 		String text = "<html><div style='text-align: center;'>Welcome to Chess, by Ansh Verma and Ved Thiru</div></html>";
 		JLabel textArea = new JLabel(text);
-	  textArea.setFocusable(false);
-		textArea.setFont(new Font("Comic Sans MS", 60, 60));
-		
+	    textArea.setFocusable(false);
+		textArea.setFont(new Font("Arial", 60, 60));
+		textArea.setOpaque(true);
+		textArea.setBackground(Color.CYAN);
 		
 		startScreen.add(textArea, BorderLayout.PAGE_START);
 		
@@ -44,7 +56,7 @@ public class Graphics {
 		
 		JButton startButton = new JButton();
 		startButton.setText("Play Chess!");
-		startButton.setBackground(Color.GRAY);
+		startButton.setBackground(Color.CYAN);
 	    startButton.setFocusable(false);
 		startButton.addActionListener(new ActionListener() {
 			@Override
@@ -53,7 +65,7 @@ public class Graphics {
 			}
 		});
 		startScreen.add(startButton, BorderLayout.CENTER);
-				
+		
 		startScreen.setSize(600,600); 
 		startScreen.setLocationRelativeTo(null);
 		startScreen.setTitle("Start Screen");
@@ -61,7 +73,7 @@ public class Graphics {
 		startScreen.setVisible(true);
 		startScreen.setDefaultCloseOperation(3); 
 		
-
+		
 		while(!canContinue) {
 			try {
 				Thread.sleep(500);
@@ -86,14 +98,25 @@ public class Graphics {
 						BoardButton clickedButton = (BoardButton) e.getSource();
 						if(Main.clickedStart == null) {
 							Main.clickedStart = clickedButton.getLocation();
-							System.out.println("start = " + clickedButton.getLocation());
+							System.out.println("\nstart = " + clickedButton.getLocation());
+							clickedButton.setBackground(Color.YELLOW);
 						}
 						else {
 							if(clickedButton.getLocation().equals(Main.clickedStart)) {
 								Main.clickedStart = null;
 							}
-							Main.clickedEnd = clickedButton.getLocation();
+							else { 
+								Main.clickedEnd = clickedButton.getLocation();
+							}
 							System.out.println("end = " + clickedButton.getLocation());
+							for(int i = 0; i < buttons.length; i++) {
+								for(int j = 0; j < buttons.length; j++) {
+									if ((i+j) % 2 == 0)
+										buttons[i][j].setBackground(Color.WHITE);
+									else
+										buttons[i][j].setBackground(Color.BLACK);
+								}
+							}
 						}
 					}
 				});
@@ -126,16 +149,11 @@ public class Graphics {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
 				if(charBoard[i][j] != '\0') {
-					String filePath = "Images/";
-					filePath += Character.isUpperCase(charBoard[i][j]) ? "W" : "B";
+					String filePath = Character.isUpperCase(charBoard[i][j]) ? "W" : "B";
 					filePath += charBoard[i][j] + ".png";
-					try {
-					    Image img = ImageIO.read(getClass().getResource(filePath));
-					    buttons[i][j].setIcon(new ImageIcon(img));
-					    
-					} catch (Exception e) { System.out.println(e);}
-					
-					
+				    Image img = images.get(filePath);
+				    
+				    buttons[i][j].setIcon(new ImageIcon(img));
 				}
 				else {
 					buttons[i][j].setIcon(null);
@@ -179,15 +197,10 @@ public class Graphics {
 				}
 			});
 			
-			String filePath = "Images/";
-			filePath += isWhite ? "W" : "B";
+			String filePath = isWhite ? "W" : "B";
 			filePath += pieceType.getChar() + ".png";
-			try {
-				 Image img = ImageIO.read(getClass().getResource(filePath));
-				 optionButtons[i].setIcon(new ImageIcon(img));
-			} catch (Exception e) { 
-				System.out.println(e);
-			}
+			Image img = images.get(filePath);
+			optionButtons[i].setIcon(new ImageIcon(img));
 			
 			promotionMenu.add(optionButtons[i]);
 			
