@@ -64,6 +64,11 @@ public class Pawn implements Piece {
     public Pawn clone() { return new Pawn(isWhite, hasMoved); }
     
     public boolean eligibleForPromotion(Piece[][] board, Point pos) {
-    	return pos.y == 0 || pos.y == board.length;
+    	return pos.y == 0 || pos.y == board.length - 1;
     }
 }
+
+
+
+
+
