@@ -13,19 +13,16 @@ public class Board {
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 Piece spot = board[i][j];
-                if(spot != null) {
+                if(spot == null) {
+                    //visibleBoard[i][j] = '.';
+                } else {
                     visibleBoard[i][j] = spot.getChar();
                 }
 
             }
         }
 
-
-        System.out.print("     ");
-        for(int i = 1; i < 9; i++) {
-            System.out.print((char)(i+64) + "   ");
-        }
-        System.out.println();
+        //we still need to work on this
         System.out.print("    ");
         for(int i = 1; i < 32; i++) {
             System.out.print("_");
@@ -50,6 +47,10 @@ public class Board {
     }
 
     public void setBoard() {
+
+        //how do we want to do the grid system? Right now it is feeling weird
+
+        //maybe we should use java.awt.Point
 
         board[0][0] = new Rook(false);
 
@@ -95,8 +96,6 @@ public class Board {
 
         board[7][7] = new Rook(true);
 
-
-
     }
 
     public Piece[][] getBoard() {
@@ -113,15 +112,16 @@ public class Board {
      * @return false if move was not successful
      */
     public boolean move(Point start, Point end) {
+    	boolean success = false;
     	if (board[start.y][start.x] != null) { 
 	    	Piece p = board[start.y][start.x].clone();
 	    	if (p.validateMove(board, start, end)) {
 	    		// swap op. Added benefit of taking out the piece
 	    		// at terminal position
+	    		success = true;
 	    		board[start.y][start.x] = null;
 	    		board[end.y][end.x] = p;
 	    		System.out.println("VALID");
-	    		return true;
 	    	}
 	    	// we need to work on this promotion thing
     		if (p instanceof Pawn && ((Pawn) p).eligibleForPromotion(board, end)) {
@@ -134,9 +134,23 @@ public class Board {
     			if (x == 'N') board[end.y][end.x] = new Knight(p.isWhite());
     			if (x == 'B') board[end.y][end.x] = new Bishop(p.isWhite());
     		}
+    		// king's check
+    		
+    		
     	}
-    	System.out.println("INVALID");
-    	return false;
+    	return success;
+    }
+    // this doesn't work, see https://en.wikipedia.org/wiki/Forsyth–Edwards_Notation
+    public String getFEN() {
+    	String r = "";
+    	for (Piece[] row: board) {
+    		for (Piece p : row) {
+    			r += (p == null) ? '0' : p.getChar();
+    		}
+    		r += '/';
+    	}
+    	r = r.replace("00000000","8");
+    	return r;
     }
 
 }
