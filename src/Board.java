@@ -53,7 +53,7 @@ public class Board {
         board[7][6] = new Knight(true);
         board[7][7] = new Rook(true);
 
-        board[4][4] = new King(true);
+        board[4][4] = new Rook(true);
     }
 
     public Piece[][] getBoard() { return board; }

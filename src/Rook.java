@@ -15,17 +15,14 @@ public class Rook extends Piece {
         // check if piece capture is same color
     	if (board[end.y][end.x] != null && board[end.y][end.x].isWhite() == this.isWhite) { return false; }
     	// check
-    	for (int i = start.x; i < end.x; i++) {
-    		if (board[start.y][i] != null) { return false; }
-    	}
+    	
     	for (int i = end.x; i < start.x; i++) {
     		if (board[start.y][i] != null) { return false; }
     	}
-    	for (int i = start.y; i < end.y; i++) {
-    		if (board[i][start.x] != null) { return false; }
-    	}
+    	
     	for (int i = end.y; i < start.y; i++) {
     		if (board[i][start.x] != null) { return false; }
+    		
     	}
     	// xor !=, because rooks can't move like that
         return (start.x == end.x) != (start.y == end.y);
