@@ -10,7 +10,7 @@ public class Main {
 		b.resetBoard();
 		b.drawBoard();
 		while(true) {
-			while(clickedStart == null || clickedEnd == null) {
+			while(clickedEnd == null|| clickedStart == null) {
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {

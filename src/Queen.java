@@ -1,7 +1,7 @@
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Queen implements Piece {
+public class Queen extends Piece {
 
     private boolean isWhite;
 
@@ -41,10 +41,6 @@ public class Queen implements Piece {
         	}
     	}
         return false;
-    }
-
-    public boolean[][] getValidMoves(Piece[][] board, Point pos){
-        return new boolean[8][8];
     }
 
     public char getChar() { return isWhite ? 'Q' : 'q'; }

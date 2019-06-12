@@ -78,6 +78,9 @@ public class Board {
     		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
 				board[end.y][end.x] = g.chooseNewPiece(p.isWhite());
     		}
+    		if(p instanceof Pawn && isValid) {
+    			 ((Pawn) p).hasMoved = true;
+    		}
     		// king's check
     		
     		

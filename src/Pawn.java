@@ -3,10 +3,10 @@ import java.util.ArrayList;
 
 // STATUS: COMPLETE
 
-public class Pawn implements Piece {
+public class Pawn extends Piece {
 
     private boolean isWhite;
-    private boolean hasMoved;
+    public boolean hasMoved;
 
     public Pawn(boolean isWhite, boolean hasMoved) { this.isWhite = isWhite; this.hasMoved = hasMoved; }
     public Pawn(boolean isWhite) { this(isWhite, false); }
@@ -36,25 +36,13 @@ public class Pawn implements Piece {
         	if ((isWhite && board[start.y-2][start.x] != null) || (!isWhite && board[start.y+2][start.x] != null)) {
         		return false;
         	}
-        	hasMoved = true;
         	return true;
         }
         // normal case
     	if ((Math.abs(start.y - end.y) == 1)) {
-    		hasMoved = true;
     		return true;
     	}
         return false;
-    }
-
-    public boolean[][] getValidMoves(Piece[][] board, Point pos){
-    	boolean[][] r = new boolean[board.length][board[0].length];
-    	for (int i = 0; i < board.length; i++) {
-    		for (int j = 0; j < board[i].length; j++) {
-    			r[i][j] = validateMove(board, pos, new Point(j, i));
-    		}
-    	}
-    	return r;
     }
 
     public char getChar() { return isWhite ? 'P' : 'p'; }

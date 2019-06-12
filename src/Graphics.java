@@ -96,48 +96,46 @@ public class Graphics {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						BoardButton clickedButton = (BoardButton) e.getSource();
-							if(Main.clickedStart == null) {
-								if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
-									Main.clickedStart = clickedButton.getLocation();
-									clickedButton.setBackground(Color.YELLOW);
-									for(int i = 0; i < buttons.length; i++) {
-										for(int j = 0; j < buttons.length; j++) {
-											if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
-												buttons[i][j].setBackground(Color.orange);
-											}
-										}
-									}
-									System.out.println("\nstart = " + clickedButton.getLocation());
-								}
-							}
-							else {
-								if(clickedButton.getLocation().equals(Main.clickedStart)) {
-									Main.clickedStart = null;
-								}
-								else { 
-									Main.clickedEnd = clickedButton.getLocation();
-								}
-								System.out.println("end = " + clickedButton.getLocation());
+						if(Main.clickedStart == null) {
+							if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
+								Main.clickedStart = clickedButton.getLocation();
+								clickedButton.setBackground(Color.YELLOW);
 								for(int i = 0; i < buttons.length; i++) {
 									for(int j = 0; j < buttons.length; j++) {
-										if ((i+j) % 2 == 0)
-											buttons[i][j].setBackground(Color.WHITE);
-										else
-											buttons[i][j].setBackground(Color.BLACK);
+										if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
+											buttons[i][j].setBackground(Color.ORANGE);
+										}
 									}
 								}
+								System.out.println("\nstart = " + clickedButton.getLocation());
 							}
-						
+						}
+						else {
+							if(clickedButton.getLocation().equals(Main.clickedStart)) {
+								Main.clickedStart = null;
+							}
+							else { 
+								Main.clickedEnd = clickedButton.getLocation();
+							}
+							System.out.println("end = " + clickedButton.getLocation());
+							for(int i = 0; i < buttons.length; i++) {
+								for(int j = 0; j < buttons.length; j++) {
+									if ((i+j) % 2 == 0)
+										buttons[i][j].setBackground(Color.LIGHT_GRAY);
+									else
+										buttons[i][j].setBackground(Color.BLACK);
+								}
+							}
+						}
 					}
 				});
 				
-				if ((i+j) % 2 == 0)
-					buttons[i][j].setBackground(Color.WHITE);
-				else
-		        	buttons[i][j].setBackground(Color.BLACK);
-				
 				buttons[i][j].setSize(100, 100);
 			    buttons[i][j].setFocusable(false);
+			    if ((i+j) % 2 == 0)
+					buttons[i][j].setBackground(Color.LIGHT_GRAY);
+				else
+		        	buttons[i][j].setBackground(Color.BLACK);
 				
 				mainPanel.add(buttons[i][j]);
 			}

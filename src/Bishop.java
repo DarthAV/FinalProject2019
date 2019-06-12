@@ -1,7 +1,7 @@
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Bishop implements Piece {
+public class Bishop extends Piece {
 
     private boolean isWhite;
 
@@ -26,16 +26,6 @@ public class Bishop implements Piece {
     		
     	}
         return true;
-    }
-
-    public boolean[][] getValidMoves(Piece[][] board, Point pos){
-    	boolean[][] r = new boolean[board.length][board[0].length];
-    	for (int i = 0; i < board.length; i++) {
-    		for (int j = 0; j < board[i].length; j++) {
-    			r[i][j] = validateMove(board, pos, new Point(j, i));
-    		}
-    	}
-    	return r;
     }
 
     public char getChar() { return isWhite ? 'B' : 'b'; }
