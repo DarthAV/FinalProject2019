@@ -1,7 +1,7 @@
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Rook implements Piece {
+public class Rook extends Piece {
 
     private boolean isWhite;
     private boolean hasMoved;
@@ -29,10 +29,6 @@ public class Rook implements Piece {
     	}
     	// xor !=, because rooks can't move like that
         return (start.x == end.x) != (start.y == end.y);
-    }
-
-    public boolean[][] getValidMoves(Piece[][] board, Point pos){
-        return new boolean[8][8];
     }
 
     public char getChar() { return isWhite ? 'R' : 'r'; }

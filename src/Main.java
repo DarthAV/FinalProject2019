@@ -4,12 +4,13 @@ import java.awt.Point;
 public class Main {
 	public static Point clickedStart;
 	public static Point clickedEnd;
+	public static Board b;
 	public static void main(String[] args) {
-		Board b = new Board();
+		b = new Board();
 		b.resetBoard();
 		b.drawBoard();
 		while(true) {
-			while(clickedStart == null || clickedEnd == null) {
+			while(clickedEnd == null|| clickedStart == null) {
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
