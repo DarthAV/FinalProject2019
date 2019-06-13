@@ -7,24 +7,11 @@ import java.util.*;
 
 public class Board {
     public Piece[][] board = new Piece[8][8];
-    private char[][] visibleBoard = new char[8][8];
-    private Graphics g = new Graphics(visibleBoard);
+    private Graphics g = new Graphics(board);
     
     
     public void drawBoard() {
-        char[][] visibleBoard = new char[8][8];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                Piece spot = board[i][j];
-                if(spot == null) {
-                    //visibleBoard[i][j] = '.';
-                } else {
-                    visibleBoard[i][j] = spot.getChar();
-                }
-            }
-        }
-        
-        g.setNewSource(visibleBoard);
+        g.setNewSource(board);
         g.refreshPieces();
         
     }
@@ -53,7 +40,6 @@ public class Board {
         board[7][6] = new Knight(true);
         board[7][7] = new Rook(true);
 
-        board[4][4] = new Rook(true);
     }
 
     public Piece[][] getBoard() { return board; }
@@ -92,6 +78,9 @@ public class Board {
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
 
+    	//we hit switch the player that is moving
+    	if(isValid) { Main.whiteTurn = !Main.whiteTurn; g.switchCurrentMovingPlayer();}
+    	
     	this.drawBoard();
     	Main.clickedStart = null;
     	Main.clickedEnd = null;

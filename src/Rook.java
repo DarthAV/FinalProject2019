@@ -22,12 +22,12 @@ public class Rook extends Piece {
     	
     	for (int i = end.y; i < start.y; i++) {
     		if (board[i][start.x] != null) { return false; }
-    		
     	}
+    	
     	// xor !=, because rooks can't move like that
         return (start.x == end.x) != (start.y == end.y);
     }
-
+    
     public char getChar() { return isWhite ? 'R' : 'r'; }
     
     public boolean isWhite() { return isWhite; }
