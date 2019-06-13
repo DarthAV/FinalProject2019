@@ -153,7 +153,6 @@ public class Graphics {
 		        	buttons[i][j].setBackground(Color.BLACK);
 				
 				innerBoard.add(buttons[i][j]);
-				whiteBoard.setPreferredSize(new Dimension(100, 100));
 			}
 			
 		}
@@ -188,10 +187,7 @@ public class Graphics {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
 				if(board[i][j] != null) {
-					String filePath = 
-							Character.isUpperCase(
-							board[i][j].getChar()) 
-							? "W" : "B";
+					String filePath = Character.isUpperCase(board[i][j].getChar()) ? "W" : "B";
 					filePath += board[i][j].getChar() + ".png";
 				    Image img = images.get(filePath);
 				    
