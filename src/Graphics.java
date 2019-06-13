@@ -9,7 +9,10 @@ public class Graphics {
 	private JFrame startScreen;  
 	private JFrame mainPanel;  
 	private JFrame promotionMenu;
-	private char[][] charBoard;
+	private JPanel innerBoard;
+	private JPanel whiteBoard;
+	private JPanel blackBoard;
+	private Piece[][] board;
 	private PieceSelectionButton[] optionButtons;
 	private BoardButton[][] buttons;
 	private Piece chosenPiece = null;
@@ -18,11 +21,14 @@ public class Graphics {
 	private Map<String, Image> images = new HashMap<String, Image>();
 	
 	
-	public Graphics(char[][] visibleBoard) {  
+	public Graphics(Piece[][] board) {  
 		startScreen = new JFrame();
 		mainPanel = new JFrame();  
+		innerBoard = new JPanel();
+		whiteBoard = new JPanel();
+		blackBoard = new JPanel();
 		buttons = new BoardButton[8][8];
-		charBoard = visibleBoard;
+		this.board = board;
 		
 		File[] files = new File("Resources/Images/").listFiles();
 		for (File file : files) {
@@ -48,15 +54,16 @@ public class Graphics {
 	    textArea.setFocusable(false);
 		textArea.setFont(new Font("Arial", 60, 60));
 		textArea.setOpaque(true);
-		textArea.setBackground(Color.CYAN);
+		textArea.setBackground(Color.LIGHT_GRAY);
 		
 		startScreen.add(textArea, BorderLayout.PAGE_START);
 		
 		//i have a good way to add bot difficulty selection
 		
 		JButton startButton = new JButton();
+		startButton.setBorderPainted(false);
 		startButton.setText("Play Chess!");
-		startButton.setBackground(Color.CYAN);
+		startButton.setBackground(Color.GRAY);
 	    startButton.setFocusable(false);
 		startButton.addActionListener(new ActionListener() {
 			@Override
@@ -88,6 +95,8 @@ public class Graphics {
 	}
 	
 	private void populateBoard() {
+		
+		
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
 				buttons[i][j] = new BoardButton(new Point(j, i));	
@@ -96,21 +105,27 @@ public class Graphics {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						BoardButton clickedButton = (BoardButton) e.getSource();
+						//first click?
 						if(Main.clickedStart == null) {
+							//is empty?
 							if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
-								Main.clickedStart = clickedButton.getLocation();
-								clickedButton.setBackground(Color.YELLOW);
-								for(int i = 0; i < buttons.length; i++) {
-									for(int j = 0; j < buttons.length; j++) {
-										if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
-											buttons[i][j].setBackground(Color.ORANGE);
+								//is correct persons turn
+								if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Main.whiteTurn) {
+									Main.clickedStart = clickedButton.getLocation();
+									clickedButton.setBackground(Color.YELLOW);
+									for(int i = 0; i < buttons.length; i++) {
+										for(int j = 0; j < buttons.length; j++) {
+											if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
+												buttons[i][j].setBackground(Color.ORANGE);
+											}
 										}
 									}
+									System.out.println("\nstart = " + clickedButton.getLocation());
 								}
-								System.out.println("\nstart = " + clickedButton.getLocation());
 							}
 						}
 						else {
+							//are the canceling first click?
 							if(clickedButton.getLocation().equals(Main.clickedStart)) {
 								Main.clickedStart = null;
 							}
@@ -137,28 +152,43 @@ public class Graphics {
 				else
 		        	buttons[i][j].setBackground(Color.BLACK);
 				
-				mainPanel.add(buttons[i][j]);
+				innerBoard.add(buttons[i][j]);
 			}
+			
 		}
+		innerBoard.setLayout(new GridLayout(8,8));
 		
-		mainPanel.setSize(1000,1000); 
+
+		mainPanel.add(innerBoard, BorderLayout.CENTER);
+		
+		mainPanel.add(whiteBoard, BorderLayout.SOUTH);
+		whiteBoard.setPreferredSize(new Dimension(900, 50));
+		whiteBoard.setBackground(Color.GREEN);
+		
+		mainPanel.add(blackBoard, BorderLayout.NORTH);
+		blackBoard.setPreferredSize(new Dimension(900, 50));
+		blackBoard.setBackground(Color.BLACK);
+		
+		
+		mainPanel.setSize(900,1000);
 		mainPanel.setLocationRelativeTo(null);
 		mainPanel.setVisible(true);
-		mainPanel.setLayout(new GridLayout(8,8)); 
+		mainPanel.setLayout(new BorderLayout()); 
 		mainPanel.setDefaultCloseOperation(3); //ends program after closing window
+		
 			
 	}  
 		
-	public void setNewSource(char[][] newBoard) {
-		this.charBoard = newBoard;
+	public void setNewSource(Piece[][] newBoard) {
+		this.board = newBoard;
 	}
 	
 	public void refreshPieces() {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
-				if(charBoard[i][j] != '\0') {
-					String filePath = Character.isUpperCase(charBoard[i][j]) ? "W" : "B";
-					filePath += charBoard[i][j] + ".png";
+				if(board[i][j] != null) {
+					String filePath = Character.isUpperCase(board[i][j].getChar()) ? "W" : "B";
+					filePath += board[i][j].getChar() + ".png";
 				    Image img = images.get(filePath);
 				    
 				    buttons[i][j].setIcon(new ImageIcon(img));
@@ -170,6 +200,10 @@ public class Graphics {
 		}
 	}
 	
+	public void switchCurrentMovingPlayer() {
+		whiteBoard.setBackground(Main.whiteTurn ? Color.GREEN : Color.GREEN);
+		blackBoard.setBackground(Main.whiteTurn ? Color.BLACK : Color.GREEN);
+	}
 	
 	public Piece chooseNewPiece(boolean isWhite) {
 

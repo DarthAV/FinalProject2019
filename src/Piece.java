@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 public abstract class Piece {
     public abstract boolean validateMove(Piece[][] board, Point start, Point end);
+    public abstract char getChar();
+    public abstract boolean isWhite();
+    public abstract Piece clone();
+    
     public boolean[][] getValidMoves(Piece[][] board, Point pos){
     	boolean[][] r = new boolean[board.length][board[0].length];
     	for (int i = 0; i < board.length; i++) {
@@ -14,7 +18,5 @@ public abstract class Piece {
     	}
     	return r;
     }
-    public abstract char getChar();
-    public abstract boolean isWhite();
-    public abstract Piece clone();
+    
 }
