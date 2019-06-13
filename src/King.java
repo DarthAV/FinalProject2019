@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class King extends Piece {
 
     private boolean isWhite;
-    private boolean hasMoved;
+    public boolean hasMoved;
 
     public King(boolean isWhite, boolean hasMoved) { this.isWhite = isWhite; this.hasMoved = hasMoved; }
     public King(boolean isWhite) { this(isWhite, false); }
@@ -27,7 +27,9 @@ public class King extends Piece {
         if (end.x < 0 || end.x > board[0].length) { return false; }
         if (end.y < 0 || end.y > board.length) { return false; }
         
-    	return true;
+        // check if more than one square away from king
+        if(Math.abs(end.x - start.x) > 1 || Math.abs(end.y - start.y) > 1) { return false; }
+        return true;
     }
 
     public char getChar() { return isWhite ? 'K' : 'k'; }
@@ -45,17 +47,18 @@ public class King extends Piece {
     	if (pos.x < 0 || pos.x > board[0].length || pos.y < 0 || pos.y > board[0].length) {
     		return true;
     	}
+    	boolean isCheck = false;
     	for (int i = 0; i < board.length; i++) {
     		for (int j = 0; j < board[0].length; j++) {
     			if (board[i][j].isWhite() != this.isWhite) {
     				if (board[i][j].getValidMoves(board, new Point(j, i))[i][j]) {
-    					return false;
+    					//isCheck false;
     				}
     			}
     		}
     	}
     	
-    	return true;
+    	return isCheck;
     }
 
     public boolean checkmate(Piece[][] board, Point pos) {
