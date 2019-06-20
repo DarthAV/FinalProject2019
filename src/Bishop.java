@@ -18,38 +18,46 @@ public class Bishop extends Piece {
 		int dx = end.x - start.x; // delta x
 		int dy = start.y - end.y; // delta y
 		boolean hit = false;
-    	for (int i = start.x-1, j = start.y-1; (i >= end.x || j >= end.y); i--, j--) {
-    		if (i < 0 || i >= board[0].length) { break; }
-            if (j < 0 || j >= board.length) { break; }
-    		if (hit) { System.out.println(0); return false; }
-    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
-    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { System.out.println(10); break; }
+		if (start.x > end.x && start.y > end.y) { 
+	    	for (int i = start.x-1, j = start.y-1; (i >= end.x || j >= end.y); i--, j--) {
+	    		if (i < 0 || i >= board[0].length) { break; }
+	            if (j < 0 || j >= board.length) { break; }
+	    		if (hit) { return false; }
+	    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
+	    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { return false; }
+	    	}
+		}
+    	hit = false;
+    	if (start.x > end.x && start.y < end.y) {
+	    	for (int i = start.x-1, j = start.y+1; (i >= end.x || j <= end.y); i--, j++) {
+	    		if (i < 0 || i >= board[0].length) { break; }
+	            if (j < 0 || j >= board.length) { break; }
+	    		if (hit) { return false; }
+	    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
+	    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { return false; }
+	    	}
     	}
     	hit = false;
-    	for (int i = start.x-1, j = start.y+1; (i >= end.x || j <= end.y); i--, j++) {
-    		if (i < 0 || i >= board[0].length) { break; }
-            if (j < 0 || j >= board.length) { break; }
-    		if (hit) { System.out.println(1); return false; }
-    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
-    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { System.out.println(20); break; }
+    	if (start.x < end.x && start.y > end.y) { 
+	    	for (int i = start.x+1, j = start.y-1; (i <= end.x || j >= end.y) ; i++, j--) {
+	    		if (i < 0 || i >= board[0].length) { break; }
+	            if (j < 0 || j >= board.length) { break; }
+	    		if (hit) { System.out.println(2); return false; }
+	    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
+	    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { return false; }
+	    	}
     	}
     	hit = false;
-    	for (int i = start.x+1, j = start.y-1; (i <= end.x || j >= end.y) ; i++, j--) {
-    		if (i < 0 || i >= board[0].length) { break; }
-            if (j < 0 || j >= board.length) { break; }
-    		if (hit) { System.out.println(2); return false; }
-    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
-    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { System.out.println(30); return false; }
+    	if (start.x < end.x && start.y < end.y) { 
+	    	for (int i = start.x+1, j = start.y+1; (i <= end.x || j <= end.y); i++, j++) {
+	    		if (i < 0 || i >= board[0].length) { break; }
+	    		if (j < 0 || j >= board.length) { break; }
+	    		if (hit) { System.out.println(3); return false; }
+	    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
+	    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { return false; }
+	    	}
     	}
-    	hit = false;
-    	for (int i = start.x+1, j = start.y+1; (i <= end.x || j <= end.y); i++, j++) {
-    		if (i < 0 || i >= board[0].length) { break; }
-    		if (j < 0 || j >= board.length) { break; }
-    		if (hit) { System.out.println(3); return false; }
-    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
-    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { System.out.println(40); break; }
-    	}
-    		
+    	
     		
 //       		for (int qx=(dx>=0)?1:-1, qy=(dy>=0)?1:-1; ((dx>=0 && qx<dx) || (dx<=0 && qx>dx)); qx+=(dx>=0)?1:-1, qy+=(dy>=0)?1:-1) {
 //    			if (board[start.y - qy][start.x - qx] != null) {

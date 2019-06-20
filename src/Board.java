@@ -41,8 +41,6 @@ public class Board {
         board[7][5] = new Bishop(true);
         board[7][6] = new Knight(true);
         board[7][7] = new Rook(true);
-        
-        board[4][4] = new Rook(true);
 
     }
 

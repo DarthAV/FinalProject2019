@@ -113,13 +113,13 @@ public class Graphics {
 								if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Main.whiteTurn) {
 									Main.clickedStart = clickedButton.getLocation();
 									clickedButton.setBackground(Color.YELLOW);
-									for(int i = 0; i < buttons.length; i++) {
+									/*for(int i = 0; i < buttons.length; i++) {
 										for(int j = 0; j < buttons.length; j++) {
 											if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
 												buttons[i][j].setBackground(Color.ORANGE);
 											}
 										}
-									}
+									}*/
 									System.out.println("\nstart = " + clickedButton.getLocation());
 								}
 							}
