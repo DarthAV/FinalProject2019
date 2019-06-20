@@ -11,9 +11,9 @@ public class King extends Piece {
 
     public boolean validateMove(Piece[][] board, Point start, Point end) {
     	// check if castle
-    	if (validateCastle(board, start, end)) { 
-    		return false;
-    	}
+//    	if (validateCastle(board, start, end) && Math.abs(start.x - end.x) == 2) { 
+//    		return false;
+//    	}
     	
     	// check if moving in valid direction
         if (Math.abs(start.x - end.x) != 1 && Math.abs(start.y - end.y) != 1) {

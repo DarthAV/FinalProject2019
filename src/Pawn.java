@@ -19,7 +19,7 @@ public class Pawn extends Piece {
     	if (board[end.y][end.x] != null && board[end.y][end.x].isWhite() == this.isWhite) { return false; }
         // same column check, UNLESS CAPTURE, then check adjacent
         if (start.x != end.x && board[end.y][end.x] == null) { return false; } 
-        if (start.x != end.x && Math.abs(start.x - end.x) != 1) { return false; }
+        if (start.x != end.x && (Math.abs(start.x - end.x) != 1 || Math.abs(start.y - end.y) != 1)) { return false; }
         
         // are they moving forward?
         if ((isWhite && (start.y - end.y) < 0) || (!isWhite && (end.y - start.y) < 0)) {

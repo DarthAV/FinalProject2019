@@ -9,6 +9,8 @@ public class Board {
     public Piece[][] board = new Piece[8][8];
     private Graphics g = new Graphics(board);
     
+    public King whiteKing = new King(true);
+    public King blackKing = new King(false);
     
     public void drawBoard() {
         g.setNewSource(board);
@@ -21,7 +23,7 @@ public class Board {
         board[0][1] = new Knight(false);
         board[0][2] = new Bishop(false);
         board[0][3] = new Queen(false);
-        board[0][4] = new King(false);
+        board[0][4] = blackKing;
         board[0][5] = new Bishop(false);
         board[0][6] = new Knight(false);
         board[0][7] = new Rook(false);
@@ -35,10 +37,12 @@ public class Board {
         board[7][1] = new Knight(true);
         board[7][2] = new Bishop(true);
         board[7][3] = new Queen(true);
-        board[7][4] = new King(true);
+        board[7][4] = whiteKing;
         board[7][5] = new Bishop(true);
         board[7][6] = new Knight(true);
         board[7][7] = new Rook(true);
+        
+        board[4][4] = new Rook(true);
 
     }
 
@@ -56,7 +60,7 @@ public class Board {
     	boolean isValid = false;
     	if (board[start.y][start.x] != null) { 
 	    	Piece p = board[start.y][start.x].clone();
-	    	if (p.validateMove(board, start, end)) {
+	    	if (p.validateMove(board.clone(), start, end)) {
 	    		// swap op. Added benefit of taking out the piece
 	    		// at terminal position
 	    		isValid = true;

@@ -40,7 +40,7 @@ public class Graphics {
 			}
 			
 		}
-		mainPanel.setTitle("Chess Game");
+		mainPanel.setTitle("Chess");
 		mainPanel.setResizable(false); 
 		
 		showStartScreen();
