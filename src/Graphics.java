@@ -176,12 +176,8 @@ public class Graphics {
 		mainPanel.setLayout(new BorderLayout()); 
 		mainPanel.setDefaultCloseOperation(3); //ends program after closing window
 		
-			
-	}  
 		
-	public void setNewSource(Piece[][] newBoard) {
-		this.board = newBoard;
-	}
+	}  
 	
 	public void refreshPieces() {
 		for(int i = 0; i < buttons.length; i++) {
@@ -201,8 +197,9 @@ public class Graphics {
 	}
 	
 	public void switchCurrentMovingPlayer() {
-		whiteBoard.setBackground(Main.whiteTurn ? Color.GREEN : Color.GREEN);
+		whiteBoard.setBackground(Main.whiteTurn ? Color.GREEN : Color.BLACK);
 		blackBoard.setBackground(Main.whiteTurn ? Color.BLACK : Color.GREEN);
+		
 	}
 	
 	public Piece chooseNewPiece(boolean isWhite) {
@@ -257,7 +254,6 @@ public class Graphics {
 		promotionMenu.setLocationRelativeTo(null);
 		promotionMenu.setVisible(true);
 		promotionMenu.setDefaultCloseOperation(0); //if red x is pressed don't close menu
-		System.out.println("Choose a piece to promote to");
 		
 		while(!chosen) {
 			try {

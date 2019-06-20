@@ -17,12 +17,13 @@ public class Rook extends Piece {
     	// check
     	
     	for (int i = end.x; i < start.x; i++) {
-    		if (board[start.y][i] != null) { return false; }
+    		if (board[i][start.x] != null) { return false; }
     	}
     	
     	for (int i = end.y; i < start.y; i++) {
-    		if (board[i][start.x] != null) { return false; }
+    		if (board[start.y][i] != null) { return false; }
     	}
+    	
     	
     	// xor !=, because rooks can't move like that
         return (start.x == end.x) != (start.y == end.y);

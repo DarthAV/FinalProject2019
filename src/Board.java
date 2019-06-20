@@ -1,17 +1,15 @@
 import java.awt.*;
 import java.util.*;
 
-// Board handles moving, classes tell whether move is valid.
-// STATUS: INCOMPLETE
-// see move method
-
 public class Board {
     public Piece[][] board = new Piece[8][8];
     private Graphics g = new Graphics(board);
     
+    public King whiteKing = new King(true);
+    public King blackKing = new King(false);
+    
     
     public void drawBoard() {
-        g.setNewSource(board);
         g.refreshPieces();
         
     }
@@ -21,7 +19,7 @@ public class Board {
         board[0][1] = new Knight(false);
         board[0][2] = new Bishop(false);
         board[0][3] = new Queen(false);
-        board[0][4] = new King(false);
+        board[0][4] = blackKing;
         board[0][5] = new Bishop(false);
         board[0][6] = new Knight(false);
         board[0][7] = new Rook(false);
@@ -35,10 +33,11 @@ public class Board {
         board[7][1] = new Knight(true);
         board[7][2] = new Bishop(true);
         board[7][3] = new Queen(true);
-        board[7][4] = new King(true);
+        board[7][4] = whiteKing;
         board[7][5] = new Bishop(true);
         board[7][6] = new Knight(true);
         board[7][7] = new Rook(true);
+
 
     }
 
@@ -54,6 +53,13 @@ public class Board {
      */
     public boolean move(Point start, Point end) {
     	boolean isValid = false;
+    	Piece[][] copy = new Piece[8][8];
+    	for (int i = 0; i < board.length; i++) {
+    		for (int j = 0; j < board.length; j++) {
+    			copy[i][j] = board[i][j].clone();
+    		}
+		}
+    	
     	if (board[start.y][start.x] != null) { 
 	    	Piece p = board[start.y][start.x].clone();
 	    	if (p.validateMove(board, start, end)) {
@@ -63,6 +69,10 @@ public class Board {
 	    		board[start.y][start.x] = null;
 	    		board[end.y][end.x] = p;
 	    	}
+    		// king's check
+   			/*if(board[start.y][start.x].isWhite() ? whiteKing.isInCheck(board, newstart.y][start.x] : blackKing.isInCheck(board, board[start.y][start.x]) {
+   				
+   			}*/
     		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
 				board[end.y][end.x] = g.chooseNewPiece(p.isWhite());
     		}
@@ -71,14 +81,14 @@ public class Board {
     		}
     		if(p instanceof King && isValid) {
    			 ((King) p).hasMoved = true;
-   		}
-    		// king's check
+   			 
+    		}
     		
     		
     	}
     	System.out.println(isValid ? "VALID" : "INVALID");
 
-    	//we hit switch the player that is moving
+    	//we switch the player that is moving
     	if(isValid) { Main.whiteTurn = !Main.whiteTurn; g.switchCurrentMovingPlayer();}
     	
     	this.drawBoard();
@@ -103,7 +113,7 @@ public class Board {
     		r += '/';
     	}
     	r = r.replace("00000000","8");
-    	return r;
-    }
+		return r;
+	}
 
 }
