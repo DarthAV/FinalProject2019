@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.util.ArrayList;
 
 public class King extends Piece {
 
@@ -57,7 +56,7 @@ public class King extends Piece {
     		for (int j = 0; j < board[0].length; j++) {
     			if (board[i][j] != null && board[i][j].isWhite() != this.isWhite) {
     				if (board[i][j].getValidMoves(board, new Point(j, i))[i][j]) {
-    					isCheck = true;
+    					return true;
     				}
     			}
     		}

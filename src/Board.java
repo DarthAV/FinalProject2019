@@ -56,7 +56,8 @@ public class Board {
     	Piece[][] copy = new Piece[8][8];
     	for (int i = 0; i < board.length; i++) {
     		for (int j = 0; j < board.length; j++) {
-    			copy[i][j] = board[i][j].clone();
+				if(board[i][j] != null)
+    				copy[i][j] = board[i][j].clone();
     		}
 		}
     	

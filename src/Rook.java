@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.util.ArrayList;
 
 public class Rook extends Piece {
 

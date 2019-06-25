@@ -1,5 +1,4 @@
 import java.awt.Point;
-import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
@@ -42,7 +41,7 @@ public class Bishop extends Piece {
 	    	for (int i = start.x+1, j = start.y-1; (i <= end.x || j >= end.y) ; i++, j--) {
 	    		if (i < 0 || i >= board[0].length) { break; }
 	            if (j < 0 || j >= board.length) { break; }
-	    		if (hit) { System.out.println(2); return false; }
+	    		if (hit) { return false; }
 	    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
 	    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { return false; }
 	    	}
@@ -52,7 +51,7 @@ public class Bishop extends Piece {
 	    	for (int i = start.x+1, j = start.y+1; (i <= end.x || j <= end.y); i++, j++) {
 	    		if (i < 0 || i >= board[0].length) { break; }
 	    		if (j < 0 || j >= board.length) { break; }
-	    		if (hit) { System.out.println(3); return false; }
+	    		if (hit) { return false; }
 	    		if (board[j][i] != null && board[j][i].isWhite() != this.isWhite) { hit = true; continue; }
 	    		if (board[j][i] != null && board[j][i].isWhite() == this.isWhite) { return false; }
 	    	}

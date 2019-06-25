@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.imageio.*;
@@ -14,12 +15,13 @@ public class Graphics {
 	private JPanel blackBoard;
 	private Piece[][] board;
 	private PieceSelectionButton[] optionButtons;
+	private Dimension screenSize;
 	private BoardButton[][] buttons;
 	private Piece chosenPiece = null;
 	private boolean chosen = false;
 	private boolean canContinue = false;
 	private Map<String, Image> images = new HashMap<String, Image>();
-	
+
 	
 	public Graphics(Piece[][] board) {  
 		startScreen = new JFrame();
@@ -28,14 +30,14 @@ public class Graphics {
 		whiteBoard = new JPanel();
 		blackBoard = new JPanel();
 		buttons = new BoardButton[8][8];
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.board = board;
 		
 		File[] files = new File("Resources/Images/").listFiles();
 		for (File file : files) {
 			try {
-				images.put(file.getName(), ImageIO.read(file));
+				images.put(file.getName(), resize(ImageIO.read(file), (int)(screenSize.getWidth()*0.05), (int)(screenSize.getHeight()*0.09)));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -73,7 +75,7 @@ public class Graphics {
 		});
 		startScreen.add(startButton, BorderLayout.CENTER);
 		
-		startScreen.setSize(600,600); 
+		startScreen.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.55)); 
 		startScreen.setLocationRelativeTo(null);
 		startScreen.setTitle("Start Screen");
 		startScreen.setResizable(false); 
@@ -85,7 +87,6 @@ public class Graphics {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -113,13 +114,13 @@ public class Graphics {
 								if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Main.whiteTurn) {
 									Main.clickedStart = clickedButton.getLocation();
 									clickedButton.setBackground(Color.YELLOW);
-									/*for(int i = 0; i < buttons.length; i++) {
+									for(int i = 0; i < buttons.length; i++) {
 										for(int j = 0; j < buttons.length; j++) {
 											if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
 												buttons[i][j].setBackground(Color.ORANGE);
 											}
 										}
-									}*/
+									}
 									System.out.println("\nstart = " + clickedButton.getLocation());
 								}
 							}
@@ -160,17 +161,18 @@ public class Graphics {
 		
 
 		mainPanel.add(innerBoard, BorderLayout.CENTER);
-		
+		innerBoard.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.92)));
+
 		mainPanel.add(whiteBoard, BorderLayout.SOUTH);
-		whiteBoard.setPreferredSize(new Dimension(900, 50));
+		whiteBoard.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.04)));
 		whiteBoard.setBackground(Color.GREEN);
 		
 		mainPanel.add(blackBoard, BorderLayout.NORTH);
-		blackBoard.setPreferredSize(new Dimension(900, 50));
+		blackBoard.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.04)));
 		blackBoard.setBackground(Color.BLACK);
 		
 		
-		mainPanel.setSize(900,1000);
+		mainPanel.setSize((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.92));
 		mainPanel.setLocationRelativeTo(null);
 		mainPanel.setVisible(true);
 		mainPanel.setLayout(new BorderLayout()); 
@@ -247,7 +249,7 @@ public class Graphics {
 		
 		
 	
-		promotionMenu.setSize(600,175); 
+		promotionMenu.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.13)); 
 		promotionMenu.setTitle("Promotion Menu");
 		promotionMenu.setLayout(new GridLayout(1, 4));
 		promotionMenu.setResizable(false); 
@@ -259,7 +261,6 @@ public class Graphics {
 			try {
 				Thread.sleep(300);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -275,6 +276,15 @@ public class Graphics {
 		return chosenPiece;
 		
 	}
+
+	private static BufferedImage resize(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 	
 	
 }
