@@ -7,7 +7,7 @@ public class Board {
     
     public King whiteKing = new King(true);
     public King blackKing = new King(false);
-    
+
     
     public void drawBoard() {
         g.refreshPieces();
@@ -62,7 +62,7 @@ public class Board {
     	
     	if (board[start.y][start.x] != null) { 
 	    	Piece p = board[start.y][start.x].clone();
-	    	if (p.validateMove(board, start, end)) {
+	    	if (p.validateMove(board.clone(), start, end)) {
 	    		// swap op. Added benefit of taking out the piece
 	    		// at terminal position
 	    		isValid = true;

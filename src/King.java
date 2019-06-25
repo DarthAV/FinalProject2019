@@ -11,8 +11,8 @@ public class King extends Piece {
 
     public boolean validateMove(Piece[][] board, Point start, Point end) {
     	// check if castle
-    	if (validateCastle(board, start, end)) { 
-    		return false;
+    	if (validateCastle(board, start, end) && Math.abs(start.x - end.x) == 2) { 
+    		return true;
     	}
     	
     	// check if moving in valid direction
@@ -40,7 +40,13 @@ public class King extends Piece {
     
     public boolean validateCastle(Piece[][] board, Point start, Point end) {
     	// a nightmare, i know.
-    	return board[start.y][start.x] instanceof King && !hasMoved && (end.x == 7 || end.x == 2) && (end.y == start.y) && (start.x == 4) && (board[start.y][(end.x - start.x) > 0 ? 7 : 0] instanceof Rook) && (((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).hasMoved()) && ((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).validateMove(board, new Point(start.y, (end.x - start.x) > 0 ? 7 : 0), new Point(start.y, start.x+(end.x - start.x) > 0 ? 1 : -1));
+    	return board[start.y][start.x] instanceof King 
+    			&& !hasMoved
+    			&& (end.x == 6 || end.x == 2) 
+    			&& (end.y == start.y) && (start.x == 4) 
+    			&& (board[start.y][(end.x - start.x) > 0 ? 7 : 0] instanceof Rook) 
+    			&& !(((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).hasMoved())
+    			&& ((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).validateMove(board, new Point(start.y, (end.x - start.x) > 0 ? 7 : 0), new Point(start.y, start.x+(end.x - start.x) > 0 ? 1 : -1));
     }
     
     public boolean isInCheck(Piece[][] board, Point pos) {
@@ -51,8 +57,7 @@ public class King extends Piece {
     		for (int j = 0; j < board[0].length; j++) {
     			if (board[i][j] != null && board[i][j].isWhite() != this.isWhite) {
     				if (board[i][j].getValidMoves(board, new Point(j, i))[i][j]) {
-    					return true;
-    					
+    					isCheck = true;
     				}
     			}
     		}
