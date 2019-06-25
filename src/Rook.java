@@ -35,6 +35,7 @@ public class Rook extends Piece {
     		if (hit) { return false; }
     		if (board[i][start.x] != null && board[i][start.x].isWhite() != this.isWhite) { hit = true; continue; }
     		if (board[i][start.x] != null) { return false; }
+
     	}
     	
     	

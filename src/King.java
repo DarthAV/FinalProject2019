@@ -49,14 +49,13 @@ public class King extends Piece {
     			&& ((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).validateMove(board, new Point(start.y, (end.x - start.x) > 0 ? 7 : 0), new Point(start.y, start.x+(end.x - start.x) > 0 ? 1 : -1));
     }
     
-    public boolean check(Piece[][] board, Point pos) {
+    public boolean isInCheck(Piece[][] board, Point pos) {
     	if (pos.x < 0 || pos.x > board[0].length || pos.y < 0 || pos.y > board[0].length) {
     		return true;
     	}
-    	boolean isCheck = false;
     	for (int i = 0; i < board.length; i++) {
     		for (int j = 0; j < board[0].length; j++) {
-    			if (board[i][j].isWhite() != this.isWhite) {
+    			if (board[i][j] != null && board[i][j].isWhite() != this.isWhite) {
     				if (board[i][j].getValidMoves(board, new Point(j, i))[i][j]) {
     					isCheck = true;
     				}
@@ -64,10 +63,35 @@ public class King extends Piece {
     		}
     	}
     	
-    	return isCheck;
+    	return false;
     }
 
-    public boolean checkmate(Piece[][] board, Point pos) {
-    	return this.check(board, pos) && this.check(board, new Point(pos.x, pos.y-1)) && this.check(board, new Point(pos.x, pos.y+1)) && this.check(board, new Point(pos.x-1, pos.y)) && this.check(board, new Point(pos.x+1, pos.y-1)) && this.check(board, new Point(pos.x-1, pos.y-1)) && this.check(board, new Point(pos.x-1, pos.y+1)) && this.check(board, new Point(pos.x+1, pos.y-1)) && this.check(board, new Point(pos.x+1, pos.y+1));
+    public boolean isCheckmate(Piece[][] board, Point pos) {
+    	boolean[][] spots = this.getValidMoves(board, pos);
+    	if(this.isInCheck(board, pos)) {
+	    	for (int i = 0; i < spots.length; i++) {
+	    		for (int j = 0; j < spots[0].length; j++) {
+	    			if(spots[i][j] && this.isInCheck(board, new Point(i,j))) { return false; }
+	    		}
+	    	}
+    	}
+    	return true; //this.isInCheck(board, pos) && this.isInCheck(board, new Point(pos.x, pos.y-1)) && this.isInCheck(board, new Point(pos.x, pos.y+1)) && this.isInCheck(board, new Point(pos.x-1, pos.y)) && this.isInCheck(board, new Point(pos.x+1, pos.y-1)) && this.isInCheck(board, new Point(pos.x-1, pos.y-1)) && this.isInCheck(board, new Point(pos.x-1, pos.y+1)) && this.isInCheck(board, new Point(pos.x+1, pos.y-1)) && this.isInCheck(board, new Point(pos.x+1, pos.y+1));
+    }
+    
+    public boolean isStalemate(Piece[][] board, Point pos) {
+    	if(this.isInCheck(board, pos)) { return false; }
+    	for (int i = 0; i < board.length; i++) {
+    		for (int j = 0; j < board[0].length; j++) {
+    			boolean[][] moves = board[i][j].getValidMoves(board, new Point(i, j));
+     			
+    		}
+    	}
+    	boolean[][] spots = this.getValidMoves(board, pos);
+    	for (int i = 0; i < spots.length; i++) {
+    		for (int j = 0; j < spots[0].length; j++) {
+    			if(spots[i][j] && !this.isInCheck(board, new Point(i,j))) { return false; }
+    		}
+    	} 
+    	return true;
     }
 }
