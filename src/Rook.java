@@ -3,7 +3,7 @@ import java.awt.Point;
 public class Rook extends Piece {
 
     private boolean isWhite;
-    private boolean hasMoved;
+    public boolean hasMoved;
 
     public Rook(boolean isWhite) { this.isWhite = isWhite; }
 

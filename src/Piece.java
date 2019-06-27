@@ -11,8 +11,8 @@ public abstract class Piece {
     public boolean[][] getValidMoves(Piece[][] board, Point pos){
     	boolean[][] r = new boolean[board.length][board[0].length];
     	for (int i = 0; i < board.length; i++) {
-    		for (int j = 0; j < board[i].length; j++) {
-    			r[i][j] = validateMove(board, pos, new Point(j, i));
+    		for (int j = 0; j < board.length; j++) {    			
+				r[i][j] = validateMove(board, pos, new Point(j, i));
     		}
     	}
     	return r;
