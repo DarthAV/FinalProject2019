@@ -36,7 +36,7 @@ public class Graphics {
 		File[] files = new File("Resources/Images/").listFiles();
 		for (File file : files) {
 			try {
-				images.put(file.getName(), resize(ImageIO.read(file), (int)(screenSize.getWidth()*0.05), (int)(screenSize.getHeight()*0.09)));
+				images.put(file.getName(), resizeImages(ImageIO.read(file), (int)(screenSize.getWidth()*0.05), (int)(screenSize.getHeight()*0.09)));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -107,16 +107,16 @@ public class Graphics {
 					public void actionPerformed(ActionEvent e) {
 						BoardButton clickedButton = (BoardButton) e.getSource();
 						//first click?
-						if(Main.clickedStart == null) {
+						if(Game.clickedStart == null) {
 							//is empty?
-							if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
+							if(Game.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
 								//is correct persons turn
-								if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Main.whiteTurn) {
-									Main.clickedStart = clickedButton.getLocation();
+								if(Game.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Game.whiteTurn) {
+									Game.clickedStart = clickedButton.getLocation();
 									clickedButton.setBackground(Color.YELLOW);
 									for(int i = 0; i < buttons.length; i++) {
 										for(int j = 0; j < buttons.length; j++) {
-											if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
+											if(Game.b.getValidMoves(clickedButton.getLocation())[i][j]) {
 												buttons[i][j].setBackground(Color.ORANGE);
 											}
 										}
@@ -126,22 +126,26 @@ public class Graphics {
 							}
 						}
 						else {
-							//are the canceling first click?
-							if(clickedButton.getLocation().equals(Main.clickedStart)) {
-								Main.clickedStart = null;
-							}
-							else { 
-								Main.clickedEnd = clickedButton.getLocation();
-							}
-							System.out.println("end = " + clickedButton.getLocation());
-							for(int i = 0; i < buttons.length; i++) {
-								for(int j = 0; j < buttons.length; j++) {
-									if ((i+j) % 2 == 0)
-										buttons[i][j].setBackground(Color.LIGHT_GRAY);
-									else
-										buttons[i][j].setBackground(Color.BLACK);
+							//are we clicking too fast
+							if(Game.clickedStart != null && Game.clickedEnd == null) {
+								//are the canceling first click?
+								if(clickedButton.getLocation().equals(Game.clickedStart)) {
+									Game.clickedStart = null;
+								}
+								else { 
+									Game.clickedEnd = clickedButton.getLocation();
+								}
+								System.out.println("end = " + clickedButton.getLocation());
+								for(int i = 0; i < buttons.length; i++) {
+									for(int j = 0; j < buttons.length; j++) {
+										if ((i+j) % 2 == 0)
+											buttons[i][j].setBackground(Color.LIGHT_GRAY);
+										else
+											buttons[i][j].setBackground(Color.BLACK);
+									}
 								}
 							}
+							refreshPieces();
 						}
 					}
 				});
@@ -177,13 +181,18 @@ public class Graphics {
 		mainPanel.setVisible(true);
 		mainPanel.setLayout(new BorderLayout()); 
 		mainPanel.setDefaultCloseOperation(3); //ends program after closing window
-		
-		
+
+
 	}  
 	
 	public void refreshPieces() {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
+				if ((i+j) % 2 == 0)
+					buttons[i][j].setBackground(Color.LIGHT_GRAY);
+				else
+					buttons[i][j].setBackground(Color.BLACK);
+
 				if(board[i][j] != null) {
 					String filePath = Character.isUpperCase(board[i][j].getChar()) ? "W" : "B";
 					filePath += board[i][j].getChar() + ".png";
@@ -194,17 +203,20 @@ public class Graphics {
 				else {
 					buttons[i][j].setIcon(null);
 				}
+				if(board[i][j] instanceof King && ((King)board[i][j]).isInCheck(board, new Point(j, i))) {
+					buttons[i][j].setBackground(Color.RED);
+				}
 			}
 		}
 	}
 	
 	public void switchCurrentMovingPlayer() {
-		whiteBoard.setBackground(Main.whiteTurn ? Color.GREEN : Color.BLACK);
-		blackBoard.setBackground(Main.whiteTurn ? Color.BLACK : Color.GREEN);
+		whiteBoard.setBackground(Game.whiteTurn ? Color.GREEN : Color.BLACK);
+		blackBoard.setBackground(Game.whiteTurn ? Color.BLACK : Color.GREEN);
 		
 	}
 	
-	public Piece chooseNewPiece(boolean isWhite) {
+	public Piece showPawnPromotionMenu(boolean isWhite) {
 
 		//disable the chess board until the piece is selected
 		for(int i = 0; i < buttons.length; i++) {
@@ -277,7 +289,7 @@ public class Graphics {
 		
 	}
 
-	private static BufferedImage resize(BufferedImage img, int height, int width) {
+	private static BufferedImage resizeImages(BufferedImage img, int height, int width) {
         Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = resized.createGraphics();

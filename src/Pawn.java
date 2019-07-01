@@ -24,10 +24,15 @@ public class Pawn extends Piece {
         if ((isWhite && (start.y - end.y) < 0) || (!isWhite && (end.y - start.y) < 0)) {
         	return false;
         }
-        // check if piece in front
-        if ((isWhite && start.x == end.x && board[start.y-1][start.x] != null) || (!isWhite && start.x == end.x && board[start.y+1][start.x] != null)) {
-        	return false;
+        try {
+            // check if piece in front
+            if ((isWhite && start.x == end.x && board[start.y-1][start.x] != null) || (!isWhite && start.x == end.x && board[start.y+1][start.x] != null)) {
+                return false;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
         }
+        
         
         // first move adv
         if ((!hasMoved && Math.abs(start.y - end.y) == 2)) {

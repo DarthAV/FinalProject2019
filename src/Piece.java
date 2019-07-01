@@ -3,7 +3,7 @@ import java.awt.Point;
 // we can always change to abstract class later
 
 public abstract class Piece {
-    public abstract boolean validateMove(Piece[][] board, Point start, Point end);
+	public abstract boolean validateMove(Piece[][] board, Point start, Point end);
     public abstract char getChar();
     public abstract boolean isWhite();
     public abstract Piece clone();

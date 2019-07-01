@@ -20,16 +20,19 @@ public class Rook extends Piece {
     		if (board[start.y][i] != null && board[start.y][i].isWhite() != this.isWhite) { hit = true; continue; }
     		if (board[start.y][i] != null) { return false; }
     	}
+    	hit = false;
     	for (int i = start.x+1; i <= end.x; i++) {
     		if (hit) { return false; }
     		if (board[start.y][i] != null && board[start.y][i].isWhite() != this.isWhite) { hit = true; continue; }
     		if (board[start.y][i] != null) { return false; }
     	}
+    	hit = false;
     	for (int i = start.y-1; i >= end.y; i--) {
     		if (hit) { return false; }
     		if (board[i][start.x] != null && board[i][start.x].isWhite() != this.isWhite) { hit = true; continue; }
     		if (board[i][start.x] != null) { return false; }
     	}
+    	hit = false;
     	for (int i = start.y+1; i <= end.y; i++) {
     		if (hit) { return false; }
     		if (board[i][start.x] != null && board[i][start.x].isWhite() != this.isWhite) { hit = true; continue; }

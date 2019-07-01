@@ -14,8 +14,7 @@ public class Bishop extends Piece {
     	if (board[end.y][end.x] != null && board[end.y][end.x].isWhite() == this.isWhite) { return false; }
     	if (Math.abs(start.x - end.x) != Math.abs(start.y - end.y)) { return false; }
     	// check
-		int dx = end.x - start.x; // delta x
-		int dy = start.y - end.y; // delta y
+		
 		boolean hit = false;
 		if (start.x > end.x && start.y > end.y) { 
 	    	for (int i = start.x-1, j = start.y-1; (i >= end.x || j >= end.y); i--, j--) {

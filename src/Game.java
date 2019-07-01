@@ -1,7 +1,7 @@
 
 import java.awt.Point;
 
-public class Main {
+public class Game {
 	public static Point clickedStart;
 	public static Point clickedEnd;
 	public static Board b;
