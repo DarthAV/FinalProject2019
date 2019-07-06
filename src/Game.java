@@ -8,8 +8,19 @@ public class Game {
 	public static boolean whiteTurn = true;
 	public static void main(String[] args) {
 		b = new Board();
+		restartGame();
+
+        // System.out.print(b.getFEN());
+
+	}
+	
+	public static void restartGame() {
 		b.resetBoard();
 		b.drawBoard();
+		play();
+	}
+	
+	public static void play() {
 		while(true) {
 			while(clickedEnd == null || clickedStart == null) {
 				try {
@@ -18,10 +29,10 @@ public class Game {
 					e.printStackTrace();
 				}
 			}
-			b.move(clickedStart, clickedEnd);
+			
+			System.out.println(b.move(clickedStart, clickedEnd) ? "VALID" : "INVALID");
 		}
-
-        // System.out.print(b.getFEN());
-
 	}
+
+	
 }

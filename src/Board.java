@@ -132,7 +132,9 @@ public class Board {
 						}
 					}
 				}
-			
+			}
+
+			if(isValid) {
 				if (movingPiece instanceof Pawn && isValid) {
 					((Pawn) movingPiece).hasMoved = true;
 					if(((Pawn) movingPiece).eligibleForPromotion(board, end)) {
@@ -155,23 +157,26 @@ public class Board {
 			if(isValid) {
 				if(isCheckmate(board, blackKing.location)) {
 					System.out.println("white wins");
+					g.showGameOverScreen(true);
 				}
 				
 				if(isCheckmate(board, whiteKing.location)) {
 					System.out.println("black wins");
+					g.showGameOverScreen(false);
 				} 
 				
 				if(isStalemate(board, (movingPiece.isWhite() ? blackKing : whiteKing).location)) {
 					System.out.println("draw: stalemate");
+					//g.showGameOverScreen(true);
 				}
 			
 				Game.whiteTurn = !Game.whiteTurn; g.switchCurrentMovingPlayer();
 				this.drawBoard();
-			
 			}
 		}
+	
+	
 
-    	System.out.println(isValid ? "VALID" : "INVALID");
 
     	Game.clickedStart = null;
     	Game.clickedEnd = null;
@@ -183,6 +188,10 @@ public class Board {
 		King kingInQuestion = board[kingPos.y][kingPos.x].isWhite() ? whiteKing : blackKing;
 		boolean[][] spots = kingInQuestion.getValidMoves(board, kingPos);
 		
+		if(!kingInQuestion.isInCheck(board, kingPos)) {
+			return false;
+		}
+
 		Piece[][] copy = new Piece[8][8];
 		for (int i = 0; i < board.length; i++) {
     		for (int j = 0; j < board.length; j++) {
@@ -190,6 +199,7 @@ public class Board {
 					copy[i][j] = board[i][j].clone();
     		}
 		}
+		
 		for (int i = 0; i < spots.length; i++) {
 			for (int j = 0; j < spots.length; j++) {
 				if(spots[i][j]) {

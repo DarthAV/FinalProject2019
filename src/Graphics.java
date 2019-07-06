@@ -10,6 +10,7 @@ public class Graphics {
 	private JFrame startScreen;  
 	private JFrame mainPanel;  
 	private JFrame promotionMenu;
+	private JFrame endScreen;
 	private JPanel innerBoard;
 	private JPanel whiteBoard;
 	private JPanel blackBoard;
@@ -25,6 +26,7 @@ public class Graphics {
 	
 	public Graphics(Piece[][] board) {  
 		startScreen = new JFrame();
+		endScreen = new JFrame();
 		mainPanel = new JFrame();  
 		innerBoard = new JPanel();
 		whiteBoard = new JPanel();
@@ -214,6 +216,74 @@ public class Graphics {
 		whiteBoard.setBackground(Game.whiteTurn ? Color.GREEN : Color.BLACK);
 		blackBoard.setBackground(Game.whiteTurn ? Color.BLACK : Color.GREEN);
 		
+	}
+
+	public void showGameOverScreen(boolean whiteWon) {
+		
+		//disable the chess board until the piece is selected
+		for(int i = 0; i < buttons.length; i++) {
+			for(int j = 0; j < buttons.length; j++) {
+				buttons[i][j].setEnabled(false);
+			}
+		}
+		endScreen.setLayout(new BorderLayout());
+		
+		String text = "<html><div style='text-align: center;'>Game Over: White Won</div></html>";
+		JLabel textArea = new JLabel(text);
+	    textArea.setFocusable(false);
+		textArea.setFont(new Font("Arial", 60, 60));
+		textArea.setOpaque(true);
+		textArea.setBackground(Color.LIGHT_GRAY);
+		
+		startScreen.add(textArea, BorderLayout.PAGE_START);
+		
+		JButton restartButton = new JButton();
+		restartButton.setBorderPainted(false);
+		restartButton.setText("Play Again?");
+		restartButton.setBackground(Color.GRAY);
+	    restartButton.setFocusable(false);
+		restartButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canContinue = true;
+			}
+		});
+		endScreen.add(restartButton, BorderLayout.CENTER);
+
+		JButton quitButton = new JButton();
+		quitButton.setBorderPainted(false);
+		quitButton.setText("Play Again?");
+		quitButton.setBackground(Color.GRAY);
+	    quitButton.setFocusable(false);
+		quitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		endScreen.add(quitButton, BorderLayout.SOUTH);
+
+
+
+		
+		endScreen.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.55)); 
+		endScreen.setLocationRelativeTo(null);
+		endScreen.setTitle("Game Over");
+		endScreen.setResizable(false); 
+		endScreen.setVisible(true);
+		endScreen.setDefaultCloseOperation(3); 
+		
+		
+		while(!canContinue) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		endScreen.setVisible(false);
+		Game.restartGame();
 	}
 	
 	public Piece showPawnPromotionMenu(boolean isWhite) {
