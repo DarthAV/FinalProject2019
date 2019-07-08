@@ -10,67 +10,39 @@ public class Board {
     
     public void drawBoard() {
         g.refreshPieces();
-        
-    }
-
-    public void resetBoard() {
-
-		
+	}
+	
+	public void resetBoard() {
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				board[i][j] = null;
+			}
+		}
 		whiteKing.location = new Point(4, 7);
 		blackKing.location = new Point(4, 0);
 
 
-        // board[0][0] = new Rook(false);
-        // board[0][1] = new Knight(false);
-        // board[0][2] = new Bishop(false);
-        // board[0][3] = new Rook(false);
-        // board[blackKing.location.y][blackKing.location.x] = blackKing;
-        // board[0][5] = new Bishop(false);
-        // board[0][6] = new Knight(false);
-        // board[0][7] = new Rook(false);
-        
-        // for (int i = 0; i < board.length; i++) {
-        //     board[1][i] = new Pawn(false);
-        //     board[6][i] = new Pawn(true);
-        // }
-        // board[7][0] = new Rook(true);
-        // board[7][1] = new Knight(true);
-        // board[7][2] = new Bishop(true);
-		// board[7][3] = new Rook(true);
-        // board[whiteKing.location.y][whiteKing.location.x] = whiteKing;
-        // board[7][5] = new Bishop(true);
-        // board[7][6] = new Knight(true);
-		// board[7][7] = new Rook(true);
-
-		// board[0][0] = new Rook(false);
-        // board[0][1] = new Knight(false);
-        // board[0][2] = new Bishop(false);
-        // board[0][3] = new Queen(false);
+        board[0][0] = new Rook(false);
+        board[0][1] = new Knight(false);
+        board[0][2] = new Bishop(false);
+        board[0][3] = new Queen(false);
         board[blackKing.location.y][blackKing.location.x] = blackKing;
-        // board[0][5] = new Bishop(false);
-        // board[0][6] = new Knight(false);
-        // board[0][7] = new Rook(false);
+        board[0][5] = new Bishop(false);
+        board[0][6] = new Knight(false);
+        board[0][7] = new Rook(false);
         
         for (int i = 0; i < board.length; i++) {
-            // board[1][i] = new Pawn(false);
-            // board[6][i] = new Pawn(true);
+            board[1][i] = new Pawn(false);
+            board[6][i] = new Pawn(true);
         }
-        board[1][3] = new Rook(true);
-        board[2][3] = new Rook(true);
-        // board[7][0] = new Rook(true);
-        // board[7][1] = new Knight(true);
-        // board[7][2] = new Bishop(true);
-		board[3][5] = new Rook(true);
-		board[1][6] = new Rook(true);
+        board[7][0] = new Rook(true);
+        board[7][1] = new Knight(true);
+        board[7][2] = new Bishop(true);
+		board[7][3] = new Queen(true);
         board[whiteKing.location.y][whiteKing.location.x] = whiteKing;
-        // board[7][5] = new Bishop(true);
-        // board[7][6] = new Knight(true);
-		// board[7][7] = new Rook(true);
-		
-
-
-
-
+        board[7][5] = new Bishop(true);
+        board[7][6] = new Knight(true);
+		board[7][7] = new Rook(true);
 	}
 
     public Piece[][] getBoard() { return board; }
@@ -155,23 +127,20 @@ public class Board {
 			}
 
 			if(isValid) {
+				this.drawBoard();
 				if(isCheckmate(board, blackKing.location)) {
-					System.out.println("white wins");
-					g.showGameOverScreen(true);
+					g.showGameOverScreen("White Won");
 				}
 				
 				if(isCheckmate(board, whiteKing.location)) {
-					System.out.println("black wins");
-					g.showGameOverScreen(false);
+					g.showGameOverScreen("Black Won");
 				} 
 				
 				if(isStalemate(board, (movingPiece.isWhite() ? blackKing : whiteKing).location)) {
-					System.out.println("draw: stalemate");
-					//g.showGameOverScreen(true);
+					g.showGameOverScreen("Stalemate");
 				}
 			
 				Game.whiteTurn = !Game.whiteTurn; g.switchCurrentMovingPlayer();
-				this.drawBoard();
 			}
 		}
 	

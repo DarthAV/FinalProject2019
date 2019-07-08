@@ -9,12 +9,13 @@ public class Game {
 	public static void main(String[] args) {
 		b = new Board();
 		restartGame();
-
         // System.out.print(b.getFEN());
 
 	}
 	
 	public static void restartGame() {
+		clickedStart = null;
+		clickedEnd = null;
 		b.resetBoard();
 		b.drawBoard();
 		play();

@@ -21,6 +21,7 @@ public class Graphics {
 	private Piece chosenPiece = null;
 	private boolean chosen = false;
 	private boolean canContinue = false;
+	private boolean canRestart = false;
 	private Map<String, Image> images = new HashMap<String, Image>();
 
 	
@@ -218,7 +219,7 @@ public class Graphics {
 		
 	}
 
-	public void showGameOverScreen(boolean whiteWon) {
+	public void showGameOverScreen(String endCondition) {
 		
 		//disable the chess board until the piece is selected
 		for(int i = 0; i < buttons.length; i++) {
@@ -228,15 +229,15 @@ public class Graphics {
 		}
 		endScreen.setLayout(new BorderLayout());
 		
-		String text = "<html><div style='text-align: center;'>Game Over: White Won</div></html>";
+		String text = "<html><div style='text-align: center;'>Game Over: " + endCondition + "</div></html>";
 		JLabel textArea = new JLabel(text);
 	    textArea.setFocusable(false);
 		textArea.setFont(new Font("Arial", 60, 60));
 		textArea.setOpaque(true);
 		textArea.setBackground(Color.LIGHT_GRAY);
-		
-		startScreen.add(textArea, BorderLayout.PAGE_START);
-		
+		endScreen.add(textArea, BorderLayout.NORTH);
+
+
 		JButton restartButton = new JButton();
 		restartButton.setBorderPainted(false);
 		restartButton.setText("Play Again?");
@@ -245,14 +246,15 @@ public class Graphics {
 		restartButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				canContinue = true;
+				canRestart = true;
 			}
 		});
 		endScreen.add(restartButton, BorderLayout.CENTER);
 
+
 		JButton quitButton = new JButton();
 		quitButton.setBorderPainted(false);
-		quitButton.setText("Play Again?");
+		quitButton.setText("Quit Game?");
 		quitButton.setBackground(Color.GRAY);
 	    quitButton.setFocusable(false);
 		quitButton.addActionListener(new ActionListener() {
@@ -265,23 +267,28 @@ public class Graphics {
 
 
 
-		
+
 		endScreen.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.55)); 
 		endScreen.setLocationRelativeTo(null);
 		endScreen.setTitle("Game Over");
 		endScreen.setResizable(false); 
 		endScreen.setVisible(true);
-		endScreen.setDefaultCloseOperation(3); 
+		endScreen.setDefaultCloseOperation(0); 
 		
 		
-		while(!canContinue) {
+		while(!canRestart) {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-
+		//enable the chess board for next game
+		for(int i = 0; i < buttons.length; i++) {
+			for(int j = 0; j < buttons.length; j++) {
+				buttons[i][j].setEnabled(true);
+			}
+		}
 		endScreen.setVisible(false);
 		Game.restartGame();
 	}
