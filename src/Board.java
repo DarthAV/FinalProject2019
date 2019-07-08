@@ -1,46 +1,49 @@
 import java.awt.*;
-import java.util.*;
-
-// Board handles moving, classes tell whether move is valid.
-// STATUS: INCOMPLETE
-// see move method
 
 public class Board {
     public Piece[][] board = new Piece[8][8];
     private Graphics g = new Graphics(board);
     
+    public King whiteKing = new King(true);
+    public King blackKing = new King(false);
+
     
     public void drawBoard() {
-        g.setNewSource(board);
         g.refreshPieces();
-        
-    }
+	}
+	
+	public void resetBoard() {
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				board[i][j] = null;
+			}
+		}
+		whiteKing.location = new Point(4, 7);
+		blackKing.location = new Point(4, 0);
 
-    public void resetBoard() {
+
         board[0][0] = new Rook(false);
         board[0][1] = new Knight(false);
         board[0][2] = new Bishop(false);
         board[0][3] = new Queen(false);
-        board[0][4] = new King(false);
+        board[blackKing.location.y][blackKing.location.x] = blackKing;
         board[0][5] = new Bishop(false);
         board[0][6] = new Knight(false);
         board[0][7] = new Rook(false);
         
-        for (int i = 0; i < board[1].length; i++) {
+        for (int i = 0; i < board.length; i++) {
             board[1][i] = new Pawn(false);
             board[6][i] = new Pawn(true);
         }
-        
         board[7][0] = new Rook(true);
         board[7][1] = new Knight(true);
         board[7][2] = new Bishop(true);
-        board[7][3] = new Queen(true);
-        board[7][4] = new King(true);
+		board[7][3] = new Queen(true);
+        board[whiteKing.location.y][whiteKing.location.x] = whiteKing;
         board[7][5] = new Bishop(true);
         board[7][6] = new Knight(true);
-        board[7][7] = new Rook(true);
-
-    }
+		board[7][7] = new Rook(true);
+	}
 
     public Piece[][] getBoard() { return board; }
 
@@ -53,46 +56,182 @@ public class Board {
      * @return false if move was not successful
      */
     public boolean move(Point start, Point end) {
-    	boolean isValid = false;
-    	if (board[start.y][start.x] != null) { 
-	    	Piece p = board[start.y][start.x].clone();
-	    	if (p.validateMove(board, start, end)) {
+		boolean isValid = false;
+    	Piece[][] copy = new Piece[8][8];
+    	for (int i = 0; i < board.length; i++) {
+    		for (int j = 0; j < board.length; j++) {
+				if(board[i][j] != null)
+					copy[i][j] = board[i][j].clone();
+    		}
+		}
+    	
+    	if(board[start.y][start.x] != null) { 
+	    	Piece movingPiece = board[start.y][start.x];
+	    	if (movingPiece.validateMove(board.clone(), start, end)) {
 	    		// swap op. Added benefit of taking out the piece
-	    		// at terminal position
+				// at terminal position
+				
+				//also moving rook in castling
+				if(movingPiece instanceof King) {
+					((King) movingPiece).location = end;
+					if(((King) movingPiece).validateCastle(board, start, end)) {
+						if(end.x == 6) {
+							board[start.y][5] = board[start.y][7];
+							board[start.y][7] = null;
+						}
+						else {
+							board[start.y][3] = board[start.y][7];
+							board[start.y][0] = null;
+						}
+					}
+				}
 	    		isValid = true;
 	    		board[start.y][start.x] = null;
-	    		board[end.y][end.x] = p;
-	    	}
-    		if (p instanceof Pawn && isValid && ((Pawn) p).eligibleForPromotion(board, end)) {
-				board[end.y][end.x] = g.chooseNewPiece(p.isWhite());
-    		}
-    		if(p instanceof Pawn && isValid) {
-    			 ((Pawn) p).hasMoved = true;
-    		}
-    		if(p instanceof King && isValid) {
-   			 ((King) p).hasMoved = true;
-   		}
-    		// king's check
-    		
-    		
-    	}
-    	System.out.println(isValid ? "VALID" : "INVALID");
+				board[end.y][end.x] = movingPiece;
+			}
 
-    	//we hit switch the player that is moving
-    	if(isValid) { Main.whiteTurn = !Main.whiteTurn; g.switchCurrentMovingPlayer();}
+			if(isValid) {
+				// self king's check
+				if(board[end.y][end.x].isWhite() ? whiteKing.isInCheck(board, whiteKing.location) : blackKing.isInCheck(board, blackKing.location)) {
+					isValid = false;
+					System.out.println("Invalid: King put into check");
+					for(int i = 0; i < board.length; i++) {
+						for(int j = 0; j < board.length; j++) {
+							if(copy[i][j] != null)
+								board[i][j] = copy[i][j].clone();
+							else 
+								board[i][j] = null;
+						}
+					}
+				}
+			}
+
+			if(isValid) {
+				if (movingPiece instanceof Pawn && isValid) {
+					((Pawn) movingPiece).hasMoved = true;
+					if(((Pawn) movingPiece).eligibleForPromotion(board, end)) {
+						board[end.y][end.x] = g.showPawnPromotionMenu(movingPiece.isWhite());
+					}
+				}
+				else if(movingPiece instanceof Rook && isValid) {
+					((Rook) movingPiece).hasMoved = true;
+				}
+				if(movingPiece instanceof King) {
+					((King) movingPiece).location = start;
+					if(isValid) {
+						((King) movingPiece).hasMoved = true;
+						((King) movingPiece).location = end;
+					}
+				}
+
+			}
+
+			if(isValid) {
+				this.drawBoard();
+				if(isCheckmate(board, blackKing.location)) {
+					g.showGameOverScreen("White Won");
+				}
+				
+				if(isCheckmate(board, whiteKing.location)) {
+					g.showGameOverScreen("Black Won");
+				} 
+				
+				if(isStalemate(board, (movingPiece.isWhite() ? blackKing : whiteKing).location)) {
+					g.showGameOverScreen("Stalemate");
+				}
+			
+				Game.whiteTurn = !Game.whiteTurn; g.switchCurrentMovingPlayer();
+			}
+		}
+	
+	
+
+
+    	Game.clickedStart = null;
+    	Game.clickedEnd = null;
+		return isValid;
+	
+    }
+    
+    public boolean isCheckmate(Piece[][] board, Point kingPos) {
+		King kingInQuestion = board[kingPos.y][kingPos.x].isWhite() ? whiteKing : blackKing;
+		boolean[][] spots = kingInQuestion.getValidMoves(board, kingPos);
+		
+		if(!kingInQuestion.isInCheck(board, kingPos)) {
+			return false;
+		}
+
+		Piece[][] copy = new Piece[8][8];
+		for (int i = 0; i < board.length; i++) {
+    		for (int j = 0; j < board.length; j++) {
+				if(board[i][j] != null)
+					copy[i][j] = board[i][j].clone();
+    		}
+		}
+		
+		for (int i = 0; i < spots.length; i++) {
+			for (int j = 0; j < spots.length; j++) {
+				if(spots[i][j]) {
+					copy[kingInQuestion.location.y][kingInQuestion.location.x] = null;
+					copy[i][j] = kingInQuestion.clone();
+					//move the king for checking in check
+					if(kingInQuestion.isInCheck(copy, new Point(j, i))) {
+						copy[kingInQuestion.location.y][kingInQuestion.location.x] = kingInQuestion;
+						copy[i][j] = null;
+					}
+					else 
+						return false;
+				}
+			}
+		}
+		return true; 
+	
+	}
+    
+    public boolean isStalemate(Piece[][] board, Point kingPos) {
+		
+		King kingInQuestion = board[kingPos.y][kingPos.x].isWhite() ? whiteKing : blackKing;
+
     	
-    	this.drawBoard();
-    	Main.clickedStart = null;
-    	Main.clickedEnd = null;
-    	return isValid;
+
+
+		if(kingInQuestion.isInCheck(board, kingPos)) { return false; }
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				if(board[i][j] != null && !kingInQuestion.location.equals(new Point(j, i)) && kingInQuestion.isWhite == board[i][j].isWhite()) {
+					boolean[][] moves = board[i][j].getValidMoves(board, new Point(j, i));
+					if(moves.length > 0) { return false; }
+				}
+			}
+		}
+
+		Piece[][] copy = new Piece[8][8];
+		for (int i = 0; i < board.length; i++) {
+    		for (int j = 0; j < board.length; j++) {
+				if(board[i][j] != null)
+					copy[i][j] = board[i][j].clone();
+    		}
+		}
+		boolean[][] spots = kingInQuestion.getValidMoves(board, kingPos);
+		for (int i = 0; i < spots.length; i++) {
+			for (int j = 0; j < spots.length; j++) {
+				
+				if(spots[i][j]) {
+					copy[kingInQuestion.location.y][kingInQuestion.location.x] = null;
+					copy[i][j] = kingInQuestion.clone();
+					//move the king for checking in check
+					if(kingInQuestion.isInCheck(copy, new Point(j, i))) {
+						copy[kingInQuestion.location.y][kingInQuestion.location.x] = kingInQuestion;
+						copy[i][j] = null;
+					}
+					else 
+						return false;
+				}
+			}
+		}
+		return true;
     }
-    
-    public boolean[][] getValidMoves(Point pos) {
-    	if(board[pos.y][pos.x] != null)
-    		return board[pos.y][pos.x].getValidMoves(board, pos);
-    	return new boolean[8][8];
-    }
-    
+
     // this doesn't work, see https://en.wikipedia.org/wiki/Forsyth-Edwards_Notation
     public String getFEN() {
     	String r = "";
@@ -103,7 +242,15 @@ public class Board {
     		r += '/';
     	}
     	r = r.replace("00000000","8");
-    	return r;
+		return r;
+	}
+
+    public boolean[][] getValidMoves(Point pos) {
+    	if(board[pos.y][pos.x] != null)
+    		return board[pos.y][pos.x].getValidMoves(board, pos);
+    	return new boolean[8][8];
     }
+	
+	
 
 }

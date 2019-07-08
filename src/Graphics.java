@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import javax.imageio.*;
@@ -9,38 +10,42 @@ public class Graphics {
 	private JFrame startScreen;  
 	private JFrame mainPanel;  
 	private JFrame promotionMenu;
+	private JFrame endScreen;
 	private JPanel innerBoard;
 	private JPanel whiteBoard;
 	private JPanel blackBoard;
 	private Piece[][] board;
 	private PieceSelectionButton[] optionButtons;
+	private Dimension screenSize;
 	private BoardButton[][] buttons;
 	private Piece chosenPiece = null;
 	private boolean chosen = false;
 	private boolean canContinue = false;
+	private boolean canRestart = false;
 	private Map<String, Image> images = new HashMap<String, Image>();
-	
+
 	
 	public Graphics(Piece[][] board) {  
 		startScreen = new JFrame();
+		endScreen = new JFrame();
 		mainPanel = new JFrame();  
 		innerBoard = new JPanel();
 		whiteBoard = new JPanel();
 		blackBoard = new JPanel();
 		buttons = new BoardButton[8][8];
+		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.board = board;
 		
 		File[] files = new File("Resources/Images/").listFiles();
 		for (File file : files) {
 			try {
-				images.put(file.getName(), ImageIO.read(file));
+				images.put(file.getName(), resizeImages(ImageIO.read(file), (int)(screenSize.getWidth()*0.05), (int)(screenSize.getHeight()*0.09)));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
 		}
-		mainPanel.setTitle("Chess Game");
+		mainPanel.setTitle("Chess");
 		mainPanel.setResizable(false); 
 		
 		showStartScreen();
@@ -73,7 +78,7 @@ public class Graphics {
 		});
 		startScreen.add(startButton, BorderLayout.CENTER);
 		
-		startScreen.setSize(600,600); 
+		startScreen.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.55)); 
 		startScreen.setLocationRelativeTo(null);
 		startScreen.setTitle("Start Screen");
 		startScreen.setResizable(false); 
@@ -85,7 +90,6 @@ public class Graphics {
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -106,16 +110,16 @@ public class Graphics {
 					public void actionPerformed(ActionEvent e) {
 						BoardButton clickedButton = (BoardButton) e.getSource();
 						//first click?
-						if(Main.clickedStart == null) {
+						if(Game.clickedStart == null) {
 							//is empty?
-							if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
+							if(Game.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()] != null) {
 								//is correct persons turn
-								if(Main.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Main.whiteTurn) {
-									Main.clickedStart = clickedButton.getLocation();
+								if(Game.b.getBoard()[(int) clickedButton.getLocation().getY()][(int) clickedButton.getLocation().getX()].isWhite() == Game.whiteTurn) {
+									Game.clickedStart = clickedButton.getLocation();
 									clickedButton.setBackground(Color.YELLOW);
 									for(int i = 0; i < buttons.length; i++) {
 										for(int j = 0; j < buttons.length; j++) {
-											if(Main.b.getValidMoves(clickedButton.getLocation())[i][j]) {
+											if(Game.b.getValidMoves(clickedButton.getLocation())[i][j]) {
 												buttons[i][j].setBackground(Color.ORANGE);
 											}
 										}
@@ -125,22 +129,26 @@ public class Graphics {
 							}
 						}
 						else {
-							//are the canceling first click?
-							if(clickedButton.getLocation().equals(Main.clickedStart)) {
-								Main.clickedStart = null;
-							}
-							else { 
-								Main.clickedEnd = clickedButton.getLocation();
-							}
-							System.out.println("end = " + clickedButton.getLocation());
-							for(int i = 0; i < buttons.length; i++) {
-								for(int j = 0; j < buttons.length; j++) {
-									if ((i+j) % 2 == 0)
-										buttons[i][j].setBackground(Color.LIGHT_GRAY);
-									else
-										buttons[i][j].setBackground(Color.BLACK);
+							//are we clicking too fast
+							if(Game.clickedStart != null && Game.clickedEnd == null) {
+								//are the canceling first click?
+								if(clickedButton.getLocation().equals(Game.clickedStart)) {
+									Game.clickedStart = null;
+								}
+								else { 
+									Game.clickedEnd = clickedButton.getLocation();
+								}
+								System.out.println("end = " + clickedButton.getLocation());
+								for(int i = 0; i < buttons.length; i++) {
+									for(int j = 0; j < buttons.length; j++) {
+										if ((i+j) % 2 == 0)
+											buttons[i][j].setBackground(Color.LIGHT_GRAY);
+										else
+											buttons[i][j].setBackground(Color.BLACK);
+									}
 								}
 							}
+							refreshPieces();
 						}
 					}
 				});
@@ -160,32 +168,34 @@ public class Graphics {
 		
 
 		mainPanel.add(innerBoard, BorderLayout.CENTER);
-		
+		innerBoard.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.92)));
+
 		mainPanel.add(whiteBoard, BorderLayout.SOUTH);
-		whiteBoard.setPreferredSize(new Dimension(900, 50));
+		whiteBoard.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.04)));
 		whiteBoard.setBackground(Color.GREEN);
 		
 		mainPanel.add(blackBoard, BorderLayout.NORTH);
-		blackBoard.setPreferredSize(new Dimension(900, 50));
+		blackBoard.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.04)));
 		blackBoard.setBackground(Color.BLACK);
 		
 		
-		mainPanel.setSize(900,1000);
+		mainPanel.setSize((int)(screenSize.getWidth()*0.46), (int)(screenSize.getHeight()*0.92));
 		mainPanel.setLocationRelativeTo(null);
 		mainPanel.setVisible(true);
 		mainPanel.setLayout(new BorderLayout()); 
 		mainPanel.setDefaultCloseOperation(3); //ends program after closing window
-		
-			
+
+
 	}  
-		
-	public void setNewSource(Piece[][] newBoard) {
-		this.board = newBoard;
-	}
 	
 	public void refreshPieces() {
 		for(int i = 0; i < buttons.length; i++) {
 			for(int j = 0; j < buttons.length; j++) {
+				if ((i+j) % 2 == 0)
+					buttons[i][j].setBackground(Color.LIGHT_GRAY);
+				else
+					buttons[i][j].setBackground(Color.BLACK);
+
 				if(board[i][j] != null) {
 					String filePath = Character.isUpperCase(board[i][j].getChar()) ? "W" : "B";
 					filePath += board[i][j].getChar() + ".png";
@@ -196,16 +206,94 @@ public class Graphics {
 				else {
 					buttons[i][j].setIcon(null);
 				}
+				if(board[i][j] instanceof King && ((King)board[i][j]).isInCheck(board, new Point(j, i))) {
+					buttons[i][j].setBackground(Color.RED);
+				}
 			}
 		}
 	}
 	
 	public void switchCurrentMovingPlayer() {
-		whiteBoard.setBackground(Main.whiteTurn ? Color.GREEN : Color.GREEN);
-		blackBoard.setBackground(Main.whiteTurn ? Color.BLACK : Color.GREEN);
+		whiteBoard.setBackground(Game.whiteTurn ? Color.GREEN : Color.BLACK);
+		blackBoard.setBackground(Game.whiteTurn ? Color.BLACK : Color.GREEN);
+		
+	}
+
+	public void showGameOverScreen(String endCondition) {
+		
+		//disable the chess board until the piece is selected
+		for(int i = 0; i < buttons.length; i++) {
+			for(int j = 0; j < buttons.length; j++) {
+				buttons[i][j].setEnabled(false);
+			}
+		}
+		endScreen.setLayout(new BorderLayout());
+		
+		String text = "<html><div style='text-align: center;'>Game Over: " + endCondition + "</div></html>";
+		JLabel textArea = new JLabel(text);
+	    textArea.setFocusable(false);
+		textArea.setFont(new Font("Arial", 60, 60));
+		textArea.setOpaque(true);
+		textArea.setBackground(Color.LIGHT_GRAY);
+		endScreen.add(textArea, BorderLayout.NORTH);
+
+
+		JButton restartButton = new JButton();
+		restartButton.setBorderPainted(false);
+		restartButton.setText("Play Again?");
+		restartButton.setBackground(Color.GRAY);
+	    restartButton.setFocusable(false);
+		restartButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				canRestart = true;
+			}
+		});
+		endScreen.add(restartButton, BorderLayout.CENTER);
+
+
+		JButton quitButton = new JButton();
+		quitButton.setBorderPainted(false);
+		quitButton.setText("Quit Game?");
+		quitButton.setBackground(Color.GRAY);
+	    quitButton.setFocusable(false);
+		quitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		endScreen.add(quitButton, BorderLayout.SOUTH);
+
+
+
+
+		endScreen.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.55)); 
+		endScreen.setLocationRelativeTo(null);
+		endScreen.setTitle("Game Over");
+		endScreen.setResizable(false); 
+		endScreen.setVisible(true);
+		endScreen.setDefaultCloseOperation(0); 
+		
+		
+		while(!canRestart) {
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		//enable the chess board for next game
+		for(int i = 0; i < buttons.length; i++) {
+			for(int j = 0; j < buttons.length; j++) {
+				buttons[i][j].setEnabled(true);
+			}
+		}
+		endScreen.setVisible(false);
+		Game.restartGame();
 	}
 	
-	public Piece chooseNewPiece(boolean isWhite) {
+	public Piece showPawnPromotionMenu(boolean isWhite) {
 
 		//disable the chess board until the piece is selected
 		for(int i = 0; i < buttons.length; i++) {
@@ -250,20 +338,18 @@ public class Graphics {
 		
 		
 	
-		promotionMenu.setSize(600,175); 
+		promotionMenu.setSize((int)(screenSize.getWidth()*0.31), (int)(screenSize.getHeight()*0.13)); 
 		promotionMenu.setTitle("Promotion Menu");
 		promotionMenu.setLayout(new GridLayout(1, 4));
 		promotionMenu.setResizable(false); 
 		promotionMenu.setLocationRelativeTo(null);
 		promotionMenu.setVisible(true);
 		promotionMenu.setDefaultCloseOperation(0); //if red x is pressed don't close menu
-		System.out.println("Choose a piece to promote to");
 		
 		while(!chosen) {
 			try {
 				Thread.sleep(300);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -279,6 +365,15 @@ public class Graphics {
 		return chosenPiece;
 		
 	}
+
+	private static BufferedImage resizeImages(BufferedImage img, int height, int width) {
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 	
 	
 }
