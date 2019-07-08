@@ -42,7 +42,6 @@ public class King extends Piece {
     public King clone() { return new King(isWhite, hasMoved, hasBeenChecked); }
     
     public boolean validateCastle(Piece[][] board, Point start, Point end) {
-    	// a nightmare, i know.
     	return board[start.y][start.x] instanceof King 
 			&& !hasMoved
 			&& !hasBeenChecked
@@ -52,6 +51,8 @@ public class King extends Piece {
 			&& !(((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).hasMoved())
 			&& ((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).validateMove(board, new Point(start.y, (end.x - start.x) > 0 ? 7 : 0), new Point(start.y, start.x+(end.x - start.x) > 0 ? 1 : -1))
 			;//&& isInCheck(board, new Point((end.x - start.x) > 0 ? start.x + 1 : start.x - 1, start.y));
+			//not included becuase it throws StackOverflowError 
+			//		REASON FOR ERROR: "isInCheck()" calls "getValidMoves()" which calls "isInCheck()"
 		}
 
     public boolean isInCheck(Piece[][] board, Point pos) {
