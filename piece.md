@@ -1,5 +1,11 @@
+# Castling is our number 1 priority
+- It is likely the last feature we need to work on
+- Unimplemented castling rules:
+    - King cannot move through squares that are in check
+- For some reason castling does not work on the right side of the king
+
 # BOARD MOVE
-- [ ] a move cannot put that piece's king in check.
+- [x] a move cannot put that piece's king in check.
 
 # pawn
 
@@ -17,7 +23,7 @@
 
 - [x] moving
     - one square only in any direction
-    - [x] castling
+    - [] castling
     - hasMovedAlready
     - check Rook as well
     - check for pieces in between
