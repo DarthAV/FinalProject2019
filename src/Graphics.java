@@ -239,7 +239,6 @@ public class Graphics {
 
 
 		JButton restartButton = new JButton();
-		restartButton.setBorderPainted(false);
 		restartButton.setText("Play Again?");
 		restartButton.setBackground(Color.GRAY);
 	    restartButton.setFocusable(false);
@@ -249,11 +248,11 @@ public class Graphics {
 				canRestart = true;
 			}
 		});
+		restartButton.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.1), (int)(screenSize.getHeight()*0.1)));
 		endScreen.add(restartButton, BorderLayout.CENTER);
 
 
 		JButton quitButton = new JButton();
-		quitButton.setBorderPainted(false);
 		quitButton.setText("Quit Game?");
 		quitButton.setBackground(Color.GRAY);
 	    quitButton.setFocusable(false);
@@ -263,6 +262,7 @@ public class Graphics {
 				System.exit(0);
 			}
 		});
+		quitButton.setPreferredSize(new Dimension((int)(screenSize.getWidth()*0.1), (int)(screenSize.getHeight()*0.1)));
 		endScreen.add(quitButton, BorderLayout.SOUTH);
 
 
