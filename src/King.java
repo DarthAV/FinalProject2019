@@ -3,7 +3,7 @@ import java.awt.Point;
 public class King extends Piece {
 
     boolean isWhite;
-    private boolean hasBeenChecked;
+    public boolean hasBeenChecked;
 	public boolean hasMoved;
 	public Point location;
 
@@ -32,7 +32,7 @@ public class King extends Piece {
         
         // check if more than one square away from king
         if(Math.abs(end.x - start.x) > 1 || Math.abs(end.y - start.y) > 1) { return false; }
-        return true;
+        return true; 
     }
 
     public char getChar() { return isWhite ? 'K' : 'k'; }
@@ -42,7 +42,16 @@ public class King extends Piece {
     public King clone() { return new King(isWhite, hasMoved, hasBeenChecked); }
     
     public boolean validateCastle(Piece[][] board, Point start, Point end) {
-    	// a nightmare, i know.
+		Point pos = new Point((end.x - start.x) > 0 ? start.x + 1 : start.x - 1, start.y);
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				if(board[i][j] != null && board[i][j].isWhite() != this.isWhite && !(board[i][j] instanceof King)) {
+					if(board[i][j].getValidMoves(board, new Point(j, i))[pos.y][pos.x]) {
+						return false;
+					}
+				}
+			}
+		}
     	return board[start.y][start.x] instanceof King 
 			&& !hasMoved
 			&& !hasBeenChecked
@@ -51,7 +60,7 @@ public class King extends Piece {
 			&& (board[start.y][(end.x - start.x) > 0 ? 7 : 0] instanceof Rook) 
 			&& !(((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).hasMoved())
 			&& ((Rook) board[start.y][(end.x - start.x) > 0 ? 7 : 0]).validateMove(board, new Point(start.y, (end.x - start.x) > 0 ? 7 : 0), new Point(start.y, start.x+(end.x - start.x) > 0 ? 1 : -1))
-			;//&& isInCheck(board, new Point((end.x - start.x) > 0 ? start.x + 1 : start.x - 1, start.y));
+			&& true;//isInCheck(board, new Point((end.x - start.x) > 0 ? start.x + 1 : start.x - 1, start.y));
 		}
 
     public boolean isInCheck(Piece[][] board, Point pos) {

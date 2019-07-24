@@ -18,31 +18,32 @@ public class Board {
 				board[i][j] = null;
 			}
 		}
-		whiteKing.location = new Point(4, 7);
+		whiteKing.location = new Point(1, 7);
 		blackKing.location = new Point(4, 0);
 
 
-        board[0][0] = new Rook(false);
-        board[0][1] = new Knight(false);
-        board[0][2] = new Bishop(false);
-        board[0][3] = new Queen(false);
+        //board[0][0] = new Rook(false);
+        // board[0][1] = new Knight(false);
+        // board[0][2] = new Bishop(false);
+        // board[0][3] = new Queen(false);
         board[blackKing.location.y][blackKing.location.x] = blackKing;
-        board[0][5] = new Bishop(false);
-        board[0][6] = new Knight(false);
-        board[0][7] = new Rook(false);
-        
-        for (int i = 0; i < board.length; i++) {
-            board[1][i] = new Pawn(false);
-            board[6][i] = new Pawn(true);
-        }
-        board[7][0] = new Rook(true);
-        board[7][1] = new Knight(true);
-        board[7][2] = new Bishop(true);
-		board[7][3] = new Queen(true);
+        // board[0][5] = new Bishop(false);
+        // board[0][6] = new Knight(false);
+        board[2][2] = new Rook(false);
+        //
+        // for (int i = 0; i < board.length; i++) {
+        //     board[1][i] = new Pawn(false);
+        //     board[6][i] = new Pawn(true);
+        // }
+        board[4][3] = new Rook(true);
+        board[6][5] = new Rook(true);
+        // board[7][1] = new Knight(true);
+        // board[7][2] = new Bishop(true);
+		// board[7][3] = new Queen(true);
         board[whiteKing.location.y][whiteKing.location.x] = whiteKing;
-        board[7][5] = new Bishop(true);
-        board[7][6] = new Knight(true);
-		board[7][7] = new Rook(true);
+        // board[7][5] = new Bishop(true);
+        // board[7][6] = new Knight(true);
+		board[7][3] = new Rook(true);
 	}
 
     public Piece[][] getBoard() { return board; }
@@ -55,7 +56,7 @@ public class Board {
      * @return true if move was successful
      * @return false if move was not successful
      */
-    public boolean move(Point start, Point end) {
+    public boolean  move(Point start, Point end) {
 		boolean isValid = false;
     	Piece[][] copy = new Piece[8][8];
     	for (int i = 0; i < board.length; i++) {
@@ -95,6 +96,7 @@ public class Board {
 				if(board[end.y][end.x].isWhite() ? whiteKing.isInCheck(board, whiteKing.location) : blackKing.isInCheck(board, blackKing.location)) {
 					isValid = false;
 					System.out.println("Invalid: King put into check");
+					
 					for(int i = 0; i < board.length; i++) {
 						for(int j = 0; j < board.length; j++) {
 							if(copy[i][j] != null)
@@ -103,6 +105,10 @@ public class Board {
 								board[i][j] = null;
 						}
 					}
+					if(movingPiece instanceof King) {
+						((King) movingPiece).location = (Point)start.clone();
+					}
+
 				}
 			}
 
@@ -117,16 +123,11 @@ public class Board {
 					((Rook) movingPiece).hasMoved = true;
 				}
 				if(movingPiece instanceof King) {
-					((King) movingPiece).location = start;
-					if(isValid) {
-						((King) movingPiece).hasMoved = true;
-						((King) movingPiece).location = end;
-					}
+					((King) movingPiece).hasMoved = true;
+					((King) movingPiece).location = end;
+					
 				}
 
-			}
-
-			if(isValid) {
 				this.drawBoard();
 				if(isCheckmate(board, blackKing.location)) {
 					g.showGameOverScreen("White Won");
@@ -139,19 +140,28 @@ public class Board {
 				if(isStalemate(board, (movingPiece.isWhite() ? blackKing : whiteKing).location)) {
 					g.showGameOverScreen("Stalemate");
 				}
+				
+				if(blackKing.isInCheck(board, blackKing.location)) {
+					blackKing.hasBeenChecked = true;
+				}
+				
+				if(whiteKing.isInCheck(board, whiteKing.location)) {
+					whiteKing.hasBeenChecked = true;
+				}
+			
 			
 				Game.whiteTurn = !Game.whiteTurn; g.switchCurrentMovingPlayer();
 			}
+	
 		}
-	
-	
-
 
     	Game.clickedStart = null;
-    	Game.clickedEnd = null;
+		Game.clickedEnd = null;
+		
 		return isValid;
+	}
 	
-    }
+
     
     public boolean isCheckmate(Piece[][] board, Point kingPos) {
 		King kingInQuestion = board[kingPos.y][kingPos.x].isWhite() ? whiteKing : blackKing;
@@ -184,6 +194,14 @@ public class Board {
 				}
 			}
 		}
+		
+		//checks all available moves for non-checkmates
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board.length; j++) {
+				
+			}
+		}
+
 		return true; 
 	
 	}
